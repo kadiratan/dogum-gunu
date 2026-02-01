@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rua 💖</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: radial-gradient(circle at top, #ff5f9e, #1a1a2e);
+    color: white;
+    overflow: hidden;
+}
+
+.container {
+    position: relative;
+    z-index: 2;
+    background: rgba(0,0,0,0.6);
+    padding: 25px;
+    border-radius: 18px;
+    width: 90%;
+    max-width: 360px;
+    text-align: center;
+    margin: auto;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+input, button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+}
+
+button {
+    background: #ff2f92;
+    color: white;
+    cursor: pointer;
+}
+
+#error {
+    color: #ffd1dc;
+    margin-top: 10px;
+}
+
+.hidden { display: none; }
+
+#countdown {
+    font-size: 48px;
+    margin-top: 20px;
+}
+
+/* Kalpler */
+.heart {
+    position: fixed;
+    bottom: 0;
+    font-size: 24px;
+    animation: floatUp 3s linear forwards;
+}
+
+@keyframes floatUp {
+    to {
+        transform: translateY(-100vh);
+        opacity: 0;
+    }
+}
+
+/* Konfeti */
+.confetti {
+    position: fixed;
+    width: 8px;
+    height: 14px;
+    background: pink;
+    animation: fall 3s linear forwards;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container" id="login">
+    <h2>Son Bir Kontrol 💭</h2>
+    <input id="q1" placeholder="Senin lakabun ne">
+    <input id="q2" placeholder="Kara listede kaç kişi var">
+    <button onclick="check()">Giriş</button>
+    <div id="error"></div>
+</div>
+
+<div class="container hidden" id="count">
+    <div id="countdown">3</div>
+</div>
+
+<div class="container hidden" id="success">
+    <h1>🎉 İyi ki Doğdun Rua 🎉</h1>
+    <p>
+        Bugün sadece doğum günün değil,<br>
+        bu dünyaya biraz daha güzellik geldiği gün 💖
+    </p>
+    <p>
+        Umarım bu küçük sürpriz yüzünde bir tebessüm bırakır.
+    </p>
+</div>
+
+<script>
+let attempts = 3;
+
+document.addEventListener("keydown", e => {
+    if (e.key === "Enter") check();
+});
+
+function check() {
+    const q1 = q1El().value.trim();
+    const q2 = q2El().value.trim();
+    const error = document.getElementById("error");
+
+    if (q1 === "Geri Tuşu" && q2 === "4") {
+        document.getElementById("login").classList.add("hidden");
+        startCountdown();
+    } else {
+        attempts--;
+        error.innerText = "Yanlış la 😅 Kalan hak: " + attempts;
+        if (attempts <= 0) {
+            window.location.href = "https://google.com";
+        }
+    }
+}
+
+function startCountdown() {
+    document.getElementById("count").classList.remove("hidden");
+    let num = 3;
+    const cd = document.getElementById("countdown");
+
+    const interval = setInterval(() => {
+        num--;
+        cd.innerText = num;
+        if (num === 0) {
+            clearInterval(interval);
+            document.getElementById("count").classList.add("hidden");
+            showSuccess();
+        }
+    }, 1000);
+}
+
+function showSuccess() {
+    document.getElementById("success").classList.remove("hidden");
+    document.getElementById("bgMusic").play();
+    hearts();
+    confetti();
+}
+
+function hearts() {
+    setInterval(() => {
+        const h = document.createElement("div");
+        h.className = "heart";
+        h.innerText = "💖";
+        h.style.left = Math.random() * 100 + "vw";
+        document.body.appendChild(h);
+        setTimeout(() => h.remove(), 3000);
+    }, 200);
+}
+
+function confetti() {
+    for (let i = 0; i < 80; i++) {
+        const c = document.createElement("div");
+        c.className = "confetti";
+        c.style.left = Math.random() * 100 + "vw";
+        c.style.background = ["#ff9a9e","#fad0c4","#fbc2eb"][Math.floor(Math.random()*3)];
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 3000);
+    }
+}
+
+function q1El(){return document.getElementById("q1")}
+function q2El(){return document.getElementById("q2")}
+</script>
+
+</body>
+</html>
