@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>İyi ki Doğdun</title>
+    <style>
+body {
+    background: linear-gradient(135deg, #1e1e1e, #3a3a3a);
+    color: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.card {
+    background: rgba(0,0,0,0.6);
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 500px;
+    text-align: center;
+}
+h1 {
+    color: #ffcc70;
+}
+p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+</style>
+
+</head>
+<body>
+<div class="card">
+    <h1>İyi ki Doğdun 🎂</h1>
+
+    <p>
+        Bugün senin günün.
+        Hayatımda olduğun için cidden şanslıyım.
+    </p>
+
+    <p>
+        Seni özel yapan şey,
+        herkes sustuğunda konuşabilmen
+        ve herkes gittiğinde kalabilmen.
+    </p>
+
+    <p>
+        Umarım bu yeni yaşın
+        sana huzur, sağlık ve yüzünü güldüren şeyler getirir.
+    </p>
+
+    <p style="font-size:14px; opacity:0.7;">
+        Bu sayfa sadece senin için hazırlandı.
+    </p>
+    <div class="card">
+    <h1>İyi ki Doğdun 🎂</h1>
+
+    <p>...</p>
+    <p>...</p>
+
+    <!-- İŞTE BURAYA -->
+</div>
+
+</div>
+
+</body>
+</html>
