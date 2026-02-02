@@ -4,12 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rua 💖</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-
 <style>
 * { box-sizing: border-box; }
-
 body {
   margin: 0;
   min-height: 100vh;
@@ -20,7 +17,6 @@ body {
   align-items: center;
   color: white;
 }
-
 .card {
   width: 90%;
   max-width: 380px;
@@ -31,9 +27,7 @@ body {
   box-shadow: 0 25px 60px rgba(0,0,0,0.35);
   text-align: center;
 }
-
 h1,h2 { font-family: 'Playfair Display', serif; }
-
 input,button {
   width: 100%;
   padding: 14px;
@@ -41,26 +35,12 @@ input,button {
   border-radius: 14px;
   border: none;
 }
-
-input {
-  background: rgba(255,255,255,0.2);
-  color: white;
-}
-
-button {
-  background: linear-gradient(135deg,#ff4fa3,#ff1f7a);
-  color: white;
-  cursor: pointer;
-}
-
+input { background: rgba(255,255,255,0.2); color: white; }
+button { background: linear-gradient(135deg,#ff4fa3,#ff1f7a); color: white; cursor: pointer; }
 .hidden { display:none; }
 #error { margin-top:10px; color:#ffd1dc; }
-
-/* Kilit butonu */
 #lockBtn { margin-top:20px; }
-
 .shake { animation: shake 0.3s infinite; }
-
 @keyframes shake {
   0% { transform: translateX(0); }
   25% { transform: translateX(-5px); }
@@ -69,9 +49,7 @@ button {
 }
 </style>
 </head>
-
 <body>
-
 <audio id="bgMusic" loop>
   <source src="music.mp3" type="audio/mpeg">
 </audio>
@@ -92,7 +70,6 @@ button {
 
 <script>
 let attempts = 3;
-
 function check(){
   const q1 = document.getElementById("q1").value.trim();
   const q2 = document.getElementById("q2").value.trim();
@@ -114,19 +91,12 @@ lockBtn.onclick = () => {
   lockBtn.classList.add("shake");
   music.volume = 0.2;
   music.play();
-
-  let v = 0.2;
-  const vol = setInterval(() => {
-    v += 0.05;
-    music.volume = Math.min(v, 0.6);
-  }, 300);
-
+  
+  // Yönlendirme BURADA: surprise.html sayfasına gider
   setTimeout(() => {
-    clearInterval(vol);
     window.location.href = "surprise.html";
   }, 3000);
 };
 </script>
-
 </body>
 </html>
