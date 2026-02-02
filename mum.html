@@ -8,7 +8,7 @@
 <style>
   body {
     margin: 0;
-    height: 100vh;
+    min-height: 100vh; /* Yükseklik en az ekran kadar olsun */
     background: #1a1a1a;
     display: flex;
     flex-direction: column;
@@ -16,18 +16,18 @@
     align-items: center;
     font-family: 'Playfair Display', serif;
     color: white;
-    overflow: hidden;
+    /* overflow: hidden;  <-- BUNU KALDIRDIM, ARTIK SIĞMAZSA KAYAR */
     user-select: none;
+    padding: 20px; /* Kenarlardan biraz boşluk */
   }
 
   h2 {
     font-weight: 400;
     letter-spacing: 1px;
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 30px; /* Boşluğu azalttım */
     font-size: 1.5rem;
     animation: fadeIn 2s ease-in;
-    padding: 0 20px;
     transition: opacity 1s;
     text-shadow: 0 0 10px rgba(255,255,255,0.3);
   }
@@ -36,6 +36,7 @@
     position: relative; width: 250px; height: 200px; cursor: pointer;
     display: flex; justify-content: center; align-items: flex-end;
     transition: transform 0.2s; -webkit-tap-highlight-color: transparent;
+    margin-bottom: 20px; /* Altına biraz boşluk verdim */
   }
   .cake-container:active { transform: scale(0.95); }
 
@@ -50,60 +51,58 @@
   .candle { position: relative; width: 12px; height: 50px; border-radius: 4px; background: repeating-linear-gradient(45deg, var(--c), var(--c) 5px, #fff 5px, #fff 10px); }
   .wick { position: absolute; top: -8px; left: 50%; transform: translateX(-50%); width: 2px; height: 8px; background: #333; }
 
-  /* ALEVLER */
   .flame {
-    position: absolute;
-    top: -25px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 12px;
-    height: 25px;
+    position: absolute; top: -25px; left: 50%; transform: translateX(-50%);
+    width: 12px; height: 25px;
     background: radial-gradient(ellipse at bottom, #fff 0%, #ffbb00 40%, #ff4d00 100%);
-    border-radius: 50% 50% 50% 50%;
-    box-shadow: 0 0 10px #ffbb00;
-    animation: flicker 1s infinite alternate;
-    transform-origin: center bottom;
-    opacity: 1;
+    border-radius: 50% 50% 50% 50%; box-shadow: 0 0 10px #ffbb00;
+    animation: flicker 1s infinite alternate; transform-origin: center bottom; opacity: 1;
   }
-
   .c1 .flame { animation-delay: 0s; } .c2 .flame { animation-delay: 0.2s; } .c3 .flame { animation-delay: 0.5s; } .c4 .flame { animation-delay: 0.1s; }
-
   @keyframes flicker {
     0% { transform: translateX(-50%) scale(1); opacity: 1; }
     100% { transform: translateX(-50%) scale(1.1, 0.9); opacity: 0.9; }
   }
 
-  /* DUMAN */
   .smoke {
     position: absolute; top: -30px; left: 50%; transform: translateX(-50%);
     width: 4px; height: 30px; background: rgba(255,255,255,0.6);
     filter: blur(4px); opacity: 0;
   }
   .smoke.rise { animation: smokeRise 2s forwards; }
-  
   @keyframes smokeRise {
     0% { opacity: 0.6; transform: translateX(-50%) translateY(0); }
     100% { opacity: 0; transform: translateX(-50%) translateY(-50px) scale(3); }
   }
 
-  /* MESAJ KUTULARI */
+  /* MESAJ KUTULARI - CSS GÜNCELLEMESİ */
   .wish-message {
-    margin-top: 30px; /* Biraz yukarı aldım */
-    font-size: 1.2rem; opacity: 0; color: #ffd700;
+    display: block; /* Görünürlüğü zorla */
+    margin-top: 10px;
+    font-size: 1.2rem; 
+    opacity: 0; /* JS ile 1 olacak */
+    color: #ffd700;
     letter-spacing: 1px; text-align: center; 
-    transition: opacity 2s;
+    transition: opacity 1s;
+    z-index: 999; /* En öne al */
+    min-height: 30px; /* Yer kaplasın */
   }
   
   .second-message {
-    margin-top: 10px;
-    font-size: 1rem; opacity: 0; color: #ff7675; /* Biraz daha pembemsi/kırmızı */
+    display: block;
+    margin-top: 5px;
+    font-size: 1rem; 
+    opacity: 0; /* JS ile 1 olacak */
+    color: #ff7675; 
     letter-spacing: 0.5px; text-align: center;
-    transition: opacity 2s;
+    transition: opacity 1s;
+    z-index: 999;
+    min-height: 25px;
   }
 
   .fade-in { opacity: 1 !important; }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-  .hint { position: absolute; bottom: 30px; font-size: 12px; color: rgba(255,255,255,0.3); }
+  .hint { margin-top: 20px; font-size: 12px; color: rgba(255,255,255,0.3); }
 </style>
 </head>
 <body>
@@ -143,13 +142,11 @@
     
     const flames = document.querySelectorAll('.flame');
     const smokes = document.querySelectorAll('.smoke');
-    
-    // Mesajları ayrı ayrı seçiyoruz
     const msg1 = document.getElementById('msg1');
     const msg2 = document.getElementById('msg2');
     const title = document.getElementById('title');
 
-    // --- ZORLA SÖNDÜRME OPERASYONU (TAM 2 SANİYE) ---
+    // Alevleri söndür
     flames.forEach(f => {
       f.style.animation = 'none';
       f.style.transition = 'all 2s ease-out';
@@ -158,21 +155,20 @@
     });
 
     smokes.forEach(s => s.classList.add('rise'));
-
     title.style.opacity = '0';
     
-    // 1. Mesaj hemen gelsin
+    // 1. Mesaj hemen
     msg1.classList.add('fade-in');
     
-    // 2. Mesaj (Espri) 0.8 saniye sonra gelsin (Daha komik olur)
+    // 2. Mesaj 1 saniye sonra
     setTimeout(() => {
         msg2.classList.add('fade-in');
-    }, 800);
+    }, 1000);
     
-    // Yönlendirme süresi: 3.5 saniye (Yazıları okuması için yarım saniye daha ekledim)
+    // Yönlendirme (Okuması için süreyi uzattım)
     setTimeout(() => {
       window.location.href = "final.html";
-    }, 3500);
+    }, 4000);
   }
 </script>
 </body>
