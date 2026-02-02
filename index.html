@@ -7,53 +7,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; }
-body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, #ff7eb3, #1a1a2e);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-}
-.card {
-  width: 90%;
-  max-width: 380px;
-  padding: 30px;
-  border-radius: 22px;
-  background: rgba(255,255,255,0.12);
-  backdrop-filter: blur(18px);
-  box-shadow: 0 25px 60px rgba(0,0,0,0.35);
-  text-align: center;
-}
+body { margin: 0; min-height: 100vh; font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #ff7eb3, #1a1a2e); display: flex; justify-content: center; align-items: center; color: white; }
+.card { width: 90%; max-width: 380px; padding: 30px; border-radius: 22px; background: rgba(255,255,255,0.12); backdrop-filter: blur(18px); box-shadow: 0 25px 60px rgba(0,0,0,0.35); text-align: center; }
 h1,h2 { font-family: 'Playfair Display', serif; }
-input,button {
-  width: 100%;
-  padding: 14px;
-  margin-top: 12px;
-  border-radius: 14px;
-  border: none;
-}
+input,button { width: 100%; padding: 14px; margin-top: 12px; border-radius: 14px; border: none; }
 input { background: rgba(255,255,255,0.2); color: white; }
 button { background: linear-gradient(135deg,#ff4fa3,#ff1f7a); color: white; cursor: pointer; transition: 0.3s; }
-
-button:disabled {
-  background: #555;
-  cursor: not-allowed;
-  opacity: 0.7;
-}
-
+button:disabled { background: #555; cursor: not-allowed; opacity: 0.7; }
 .hidden { display:none; }
 #error { margin-top:15px; color:#ffd1dc; font-weight: bold; }
 #lockBtn { margin-top:20px; }
 .shake { animation: shake 0.3s infinite; }
-@keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  50% { transform: translateX(5px); }
-  75% { transform: translateX(-5px); }
-}
+@keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 50% { transform: translateX(5px); } 75% { transform: translateX(-5px); } }
 </style>
 </head>
 <body>
@@ -74,101 +39,44 @@ button:disabled {
 
 <script>
 let attempts = 3;
-
 function check(){
-  if (attempts <= 0) return;
-
   const q1 = document.getElementById("q1").value.trim();
   const q2 = document.getElementById("q2").value.trim();
   const error = document.getElementById("error");
   const btn = document.getElementById("checkBtn");
-  const inputs = document.querySelectorAll("input");
-
-  // DOĞRU CEVAP
+  
   if(q1 === "Geri Tuşu" && q2 === "4"){
     document.getElementById("login").classList.add("hidden");
     document.getElementById("success").classList.remove("hidden");
-    
-    // Doğru bildiği an müzik garanti başlasın (User interaction olduğu için izin verir)
-    const audio = document.getElementById("bgMusic");
-    audio.play();
+    const audio = document.getElementById("bgMusic"); audio.play();
   } else {
-    // YANLIŞ CEVAP
     attempts--; 
-    if (attempts < 0) attempts = 0;
-
-    if(attempts === 2) {
-      error.innerText = "Nasıl bilmezsin 😱 (Kalan hak: 2)";
-      titret();
-    } 
-    else if(attempts === 1) {
-      error.innerText = "Şüphelenmeye başladım 🤨 (Kalan hak: 1)";
-      titret();
-    } 
-    else if(attempts === 0) {
-      error.innerHTML = "Git Kadir'e sor artık...<br>Belki de sen Rua değilsin! 🤐";
-      error.style.color = "#ff6b6b"; 
-      
-      btn.disabled = true;
-      btn.innerText = "KİLİTLENDİ 🚫";
-      
-      inputs.forEach(input => {
-        input.disabled = true;
-        input.style.opacity = "0.5";
-      });
+    if (attempts <= 0) {
+      error.innerHTML = "Git Kadir'e sor...<br>Belki de sen Rua değilsin! 🤐";
+      btn.disabled = true; btn.innerText = "KİLİTLENDİ 🚫";
+    } else {
+      error.innerText = `Yanlış cevap! (Kalan hak: ${attempts})`;
+      document.getElementById("login").classList.add("shake");
+      setTimeout(()=>document.getElementById("login").classList.remove("shake"),300);
     }
   }
-}
-
-function titret() {
-  const card = document.getElementById("login");
-  card.style.animation = "shake 0.3s";
-  setTimeout(() => card.style.animation = "", 300);
 }
 
 const lockBtn = document.getElementById("lockBtn");
-
 lockBtn.onclick = () => {
   lockBtn.classList.add("shake");
-  
-  // Müzik zaten çalıyor olacak, biz sadece yönlendirelim
-  setTimeout(() => {
-    // BURAYI MUM.HTML YAPTIM Kİ ZİNCİR KOPMASIN
-    window.location.href = "surpriz.html";
-  }, 3000);
+  // BURASI SURPRISE SAYFASINA GİDER
+  setTimeout(() => { window.location.href = "surprise.html"; }, 2000);
 };
 </script>
 
-<audio id="bgMusic" loop>
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
-
+<audio id="bgMusic" loop> <source src="music.mp3" type="audio/mpeg"> </audio>
 <script>
   const audio = document.getElementById("bgMusic");
-
-  // Hafızadaki süreyi kontrol et (Sayfa yenilenirse diye)
   const savedTime = localStorage.getItem("songTime");
-  if (savedTime) {
-    audio.currentTime = parseFloat(savedTime);
-  }
-
-  // Oynatmaya çalış
-  var playPromise = audio.play();
-  if (playPromise !== undefined) {
-    playPromise.then(_ => {}).catch(error => {
-      // Engellenirse ilk tıklamada aç
-      document.body.addEventListener('click', () => { audio.play(); }, { once: true });
-    });
-  }
-
-  // Süreyi kaydet
-  setInterval(() => {
-    if (!audio.paused) {
-      localStorage.setItem("songTime", audio.currentTime);
-    }
-  }, 500);
+  if (savedTime) audio.currentTime = parseFloat(savedTime);
+  audio.play().catch(() => { document.body.addEventListener('click', () => { audio.play(); }, { once: true }); });
+  setInterval(() => { if (!audio.paused) localStorage.setItem("songTime", audio.currentTime); }, 500);
 </script>
-
 </body>
 </html>
-
