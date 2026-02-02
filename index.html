@@ -80,38 +80,31 @@ button:disabled {
 let attempts = 3;
 
 function check(){
-  // Eğer hak bittiyse işlem yapma (Ekstra Güvenlik)
-  if (attempts <= 0) return;
-
   const q1 = document.getElementById("q1").value.trim();
   const q2 = document.getElementById("q2").value.trim();
   const error = document.getElementById("error");
   const btn = document.getElementById("checkBtn");
   const inputs = document.querySelectorAll("input");
 
+  // Eğer zaten kilitliyse işlem yapma
+  if (btn.disabled) return;
+
   // Doğru cevap kontrolü
   if(q1 === "Geri Tuşu" && q2 === "4"){
     document.getElementById("login").classList.add("hidden");
     document.getElementById("success").classList.remove("hidden");
   } else {
-    // Yanlış cevap, hakkı bir azalt
+    // Yanlış cevap, hakkı düşür
     attempts--;
 
-    if(attempts > 0) {
-      // Hala hakkı varsa uyar
-      error.innerText = "Yanlış 😅 Kalan hak: " + attempts;
+    if(attempts <= 0) {
+      // --- HAK BİTTİ (GAME OVER) ---
+      // 0 veya daha az olduğu an burası çalışır
       
-      // Titreme efekti
-      const card = document.getElementById("login");
-      card.style.animation = "shake 0.3s";
-      setTimeout(() => card.style.animation = "", 300);
-      
-    } else {
-      // HAKKI BİTTİ (0 OLDU) - KİLİTLE
       error.innerHTML = "Git Kadir'e sor artık...<br>Belki de sen Rua değilsin! 🤨";
       error.style.color = "#ff6b6b"; 
       
-      // Butonu ve girişleri kalıcı olarak kilitle
+      // Her şeyi kilitle
       btn.disabled = true;
       btn.innerText = "KİLİTLENDİ 🚫";
       
@@ -119,6 +112,15 @@ function check(){
         input.disabled = true;
         input.style.opacity = "0.5";
       });
+
+    } else {
+      // --- HALA HAKKI VAR ---
+      error.innerText = "Yanlış 😅 Kalan hak: " + attempts;
+      
+      // Titreme efekti
+      const card = document.getElementById("login");
+      card.style.animation = "shake 0.3s";
+      setTimeout(() => card.style.animation = "", 300);
     }
   }
 }
