@@ -12,7 +12,6 @@
     margin: 0;
     height: 100vh;
     font-family: 'Quicksand', sans-serif;
-    /* Kızların sevdiği Pastel Sunset Arka Plan */
     background: linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%);
     display: flex;
     justify-content: center;
@@ -29,21 +28,27 @@
     width: 100%; height: 100%;
     pointer-events: none;
     z-index: 1;
+    display: flex;
+    flex-wrap: wrap; /* Izgara mantığı için */
+    align-content: space-around; /* Dikeyde dağıt */
+    justify-content: space-around; /* Yatayda dağıt */
+    padding: 20px;
   }
 
   /* KELİME STİLİ */
   .tag {
-    position: absolute;
-    background: rgba(255, 255, 255, 0.5);
+    position: relative; /* Absolute yerine Relative yaptık ki çakışmasın */
+    background: rgba(255, 255, 255, 0.6);
     padding: 10px 20px;
     border-radius: 50px;
     font-size: 0.95rem;
     font-weight: 600;
-    color: #d63384; /* Pembe yazı */
+    color: #d63384; 
     white-space: nowrap;
     border: 2px solid #fff;
     box-shadow: 0 5px 15px rgba(214, 51, 132, 0.05);
-    animation: floatAround 5s ease-in-out infinite;
+    margin: 15px; /* Birbirlerine yapışmasınlar */
+    animation: floatAround 6s ease-in-out infinite;
   }
 
   @keyframes floatAround {
@@ -54,18 +59,20 @@
 
   /* KART TASARIMI */
   .card {
-    position: relative;
+    position: absolute; /* Ortada sabit kalsın */
     z-index: 100;
     width: 90%;
     max-width: 380px;
     padding: 45px 35px;
-    background: rgba(255, 255, 255, 0.85); /* Beyazlığı artırdım */
+    background: rgba(255, 255, 255, 0.9); /* Kartın arkası görünmesin */
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     border: 3px solid #fff;
     border-radius: 30px;
-    box-shadow: 0 20px 50px rgba(214, 51, 132, 0.15);
+    box-shadow: 0 20px 50px rgba(214, 51, 132, 0.25);
     text-align: center;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
   }
 
   h2 {
@@ -76,67 +83,32 @@
     font-weight: 700;
   }
 
-  p.subtitle {
-    font-size: 0.9rem;
-    color: #777;
-    margin-bottom: 30px;
-    font-weight: 500;
-  }
-
+  p.subtitle { font-size: 0.9rem; color: #777; margin-bottom: 30px; font-weight: 500; }
   .input-group { margin-bottom: 15px; }
   
   input {
-    width: 100%;
-    padding: 15px;
-    border-radius: 20px;
-    border: 2px solid #fff;
-    background: rgba(255,255,255,0.6);
-    color: #333;
-    font-family: 'Quicksand', sans-serif;
-    font-size: 1rem;
-    font-weight: 500;
-    outline: none;
-    transition: 0.3s;
+    width: 100%; padding: 15px; border-radius: 20px;
+    border: 2px solid #fff; background: rgba(255,255,255,0.6);
+    color: #333; font-family: 'Quicksand', sans-serif; font-size: 1rem;
+    font-weight: 500; outline: none; transition: 0.3s;
   }
   input::placeholder { color: #aaa; }
-  input:focus {
-    background: #fff;
-    border-color: #ffb6c1;
-    box-shadow: 0 0 15px rgba(255, 182, 193, 0.3);
-  }
+  input:focus { background: #fff; border-color: #ffb6c1; }
 
   button {
-    width: 100%;
-    padding: 16px;
-    margin-top: 20px;
-    border-radius: 20px;
-    border: none;
+    width: 100%; padding: 16px; margin-top: 20px; border-radius: 20px; border: none;
     background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
-    color: #fff;
-    font-weight: 700;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: 0.3s;
+    color: #fff; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: 0.3s;
     box-shadow: 0 10px 20px rgba(255, 154, 158, 0.3);
   }
   button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 25px rgba(255, 154, 158, 0.4);
+    transform: translateY(-3px); box-shadow: 0 15px 25px rgba(255, 154, 158, 0.4);
     background: linear-gradient(135deg, #ff9a9e 0%, #ffc3a0 100%);
   }
   button:disabled { background: #ccc; cursor: not-allowed; transform: none; box-shadow: none; }
 
   .hidden { display:none; }
-  
-  /* Hata Mesajı Rengi */
-  #error { 
-    margin-top: 20px; 
-    color: #ff4757; /* Kırmızı ton */
-    font-weight: 700; 
-    font-size: 0.95rem; 
-    min-height: 25px;
-  }
-  
+  #error { margin-top: 20px; color: #ff4757; font-weight: 700; font-size: 0.95rem; min-height: 25px; }
   .shake { animation: shake 0.3s infinite; }
   @keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 50% { transform: translateX(5px); } 75% { transform: translateX(-5px); } }
 </style>
@@ -148,10 +120,8 @@
 <div class="card" id="login">
   <h2>Hoş Geldin Rua</h2>
   <p class="subtitle">İçeri girmek için küçük bir doğrulama...</p>
-  
   <div class="input-group"><input id="q1" placeholder="Lakabın ne? (İpucu: Geri..)"></div>
   <div class="input-group"><input id="q2" placeholder="Kara listede kaç kişi var?"></div>
-  
   <button id="checkBtn" onclick="check()">Giriş Yap 🌸</button>
   <div id="error"></div>
 </div>
@@ -177,13 +147,20 @@
 
   const container = document.getElementById('memories');
 
+  // Kelimeleri sırayla ekle (Grid/Flexbox yerleştirecek)
   kelimeler.forEach((kelime) => {
     const tag = document.createElement('div');
     tag.className = 'tag';
     tag.innerText = kelime;
-    tag.style.top = Math.random() * 80 + 5 + '%';
-    tag.style.left = Math.random() * 80 + 5 + '%';
+    
+    // Her kelimeye farklı animasyon gecikmesi ver ki robot gibi aynı anda oynamasınlar
     tag.style.animationDelay = (Math.random() * 5) + 's';
+    
+    // Hafif sağa sola kaydır ki çok hizalı durmasın (Doğallık katar)
+    const randomMargin = Math.floor(Math.random() * 30);
+    tag.style.marginLeft = randomMargin + 'px';
+    tag.style.marginTop = randomMargin + 'px';
+
     container.appendChild(tag);
   });
 
@@ -191,7 +168,6 @@
   let attempts = 3;
   
   function check(){
-    // Eğer hak bittiyse butona basınca işlem yapma
     if (attempts <= 0) return;
 
     const q1 = document.getElementById("q1").value.trim();
@@ -200,17 +176,13 @@
     const btn = document.getElementById("checkBtn");
     const inputs = document.querySelectorAll("input");
     
-    // 1. DOĞRU CEVAP KONTROLÜ
     if(q1.toLowerCase() === "geri tuşu" && q2 === "4"){
       document.getElementById("login").classList.add("hidden");
       document.getElementById("success").classList.remove("hidden");
       const audio = document.getElementById("bgMusic"); audio.play();
     } 
-    // 2. YANLIŞ CEVAP KONTROLÜ
     else {
-      attempts--; // Hakkı 1 azalt
-      
-      // Kalan hakka göre mesaj ver
+      attempts--; 
       if (attempts === 2) {
         error.innerHTML = "Nasıl bilmezsin 😱 <br>(Kalan hak: 2)";
         titret();
@@ -220,14 +192,10 @@
         titret();
       } 
       else {
-        // HAK BİTTİ (0 OLDU)
         error.innerHTML = "Git Kadir'e sor...<br>Sen Rua değilsin! 🤐";
-        
-        // Butonu ve Inputları Kilitle
         btn.disabled = true;
         btn.innerText = "KİLİTLENDİ 🚫";
         btn.style.background = "#ccc";
-        
         inputs.forEach(inp => {
           inp.disabled = true;
           inp.placeholder = "🚫";
