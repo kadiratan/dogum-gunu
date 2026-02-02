@@ -17,7 +17,7 @@ body{
   background: linear-gradient(135deg,#1a1a2e,#16213e);
   font-family: 'Poppins', sans-serif;
   color:white;
-  overflow: hidden; /* Taşmaları engelle */
+  overflow: hidden; 
 }
 
 .card{
@@ -29,25 +29,25 @@ body{
   max-width: 420px;
   text-align: center;
   box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-  transition: transform 0.3s;
 }
 
-/* Resim artık tıklanabilir olduğu için imleç değişsin */
+/* Resim ayarları - Tıklanabilir olduğu belli olsun */
 img {
   width:100%;
   border-radius:18px;
   margin-bottom:15px;
-  cursor: pointer; 
-  transition: transform 0.2s;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  cursor: pointer; /* Bilgisayarda el işareti çıkar */
+  transition: transform 0.1s; /* Tıklama efekti için */
+  -webkit-tap-highlight-color: transparent; /* Telefonda tıklayınca mavi kutu çıkmasın */
 }
 
 img:active {
-  transform: scale(0.95); /* Tıklayınca hafif küçülme efekti */
+  transform: scale(0.95); /* Tıklayınca resim hafifçe içeri göçer */
 }
 
 .small{ font-size:14px; opacity:0.7; margin-bottom: 20px; }
 
+/* Gizli mesaj başlangıçta görünmez */
 .hidden-message {
   display: none;
   margin-top: 20px;
@@ -78,8 +78,8 @@ h2 { margin-bottom: 5px; color: #ff7eb3; }
   <p>Bazı insanlar sessizce dünyayı güzelleştirir.</p>
 
   <div class="hidden-message" id="secret">
-    <p style="font-size: 1.2em; font-weight: bold;">💖 Bu kalp sana ait!</p>
-    <p>Nice mutlu, huzurlu yaşlara...</p>
+    <p style="font-size: 1.2em; font-weight: bold; color: #ff4fa3;">💖 Bu kalp sana ait!</p>
+    <p>Nice mutlu yaşlara...</p>
   </div>
 </div>
 
@@ -87,11 +87,11 @@ h2 { margin-bottom: 5px; color: #ff7eb3; }
 function patlat() {
   const secret = document.getElementById("secret");
   
-  // 1. Gizli mesajı aç
+  // 1. Gizli mesajı görünür yap
   secret.style.display = "block";
 
-  // 2. Konfeti Yağmuru Başlasın!
-  var duration = 3 * 1000; // 3 saniye sürsün
+  // 2. Konfeti yağdır
+  var duration = 3 * 1000;
   var animationEnd = Date.now() + duration;
   var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
 
@@ -103,8 +103,6 @@ function patlat() {
     }
 
     var particleCount = 50 * (timeLeft / duration);
-    
-    // Rastgele konfeti fırlat
     confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
     confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
   }, 250);
