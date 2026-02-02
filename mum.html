@@ -37,53 +37,49 @@
     background: linear-gradient(#e6e6e6, #d9d9d9, #bfbfbf);
     border-radius: 4px; position: relative;
     box-shadow: inset 0 -20px 20px rgba(0,0,0,0.1), 0 0 20px rgba(0,0,0,0.5);
-  }
-  .wick {
-    position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
-    width: 4px; height: 15px; background: #333; border-radius: 2px;
+    display: flex; justify-content: center; /* Ateşi ortalamak için */
   }
   
-  /* ALEV AYARLARI */
+  .wick {
+    position: absolute; top: -15px; width: 4px; height: 15px; background: #333; border-radius: 2px; z-index: 1;
+  }
+
+  /* --- YENİ SİSTEM: ALEV KAPSÜLÜ --- */
+  /* Bu kutu Sönme işlemini yapacak */
+  .flame-wrapper {
+    position: absolute;
+    top: -55px; /* Fitilin üzerine */
+    width: 20px;
+    height: 40px;
+    transform-origin: bottom center;
+    transition: all 2s ease-in-out; /* 2 Saniyede yavaşça yok ol */
+    z-index: 2;
+  }
+
+  /* Bu kutu Titreme işlemini yapacak (İçeride) */
   .flame {
-    position: absolute; top: -45px; left: 50%; 
-    /* Başlangıç pozisyonu */
-    transform: translateX(-50%) scale(1);
-    width: 20px; height: 40px;
+    width: 100%;
+    height: 100%;
     background: radial-gradient(ellipse at bottom, #fff 0%, #ffbb00 40%, #ff4d00 100%);
     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
     box-shadow: 0 0 20px #ffbb00, 0 0 50px #ff4d00;
-    
-    /* Titreme animasyonu */
     animation: flicker 1s infinite alternate;
-    transform-origin: center bottom; 
-    
-    /* Sönme geçişi için ayar (2 saniye sürsün) */
-    transition: all 2s ease-out; 
-  }
-  
-  @keyframes flicker {
-    0% { transform: translateX(-50%) scale(1); opacity: 1; }
-    100% { transform: translateX(-50%) scale(1.1, 0.9); opacity: 0.9; }
+    transform-origin: center bottom;
   }
 
-  /* SÖNME EFEKTİ (ÖNEMLİ KISIM) */
-  .flame.out {
-    /* 1. Titremeyi DURDUR (Yoksa küçülme bozulur) */
-    animation: none !important;
-    
-    /* 2. Boyutu SIFIRA indir (yok ol) */
-    transform: translateX(-50%) scale(0) !important;
-    
-    /* 3. Görünürlüğü kapat */
-    opacity: 0 !important;
-    
-    /* 4. Rengi/Parlamayı sil */
-    background: transparent !important;
-    box-shadow: none !important;
+  /* ALEV SÖNDÜĞÜNDE BU SINIF GELECEK */
+  .flame-wrapper.out {
+    transform: scale(0); /* Kapsülü sıfıra indir */
+    opacity: 0; /* Görünmez yap */
+  }
+
+  @keyframes flicker {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(1.1, 0.9); opacity: 0.9; }
   }
 
   .smoke {
-    position: absolute; top: -30px; left: 50%; transform: translateX(-50%);
+    position: absolute; top: -30px; 
     width: 4px; height: 40px; background: rgba(255,255,255,0.6);
     filter: blur(5px); border-radius: 50%; opacity: 0; pointer-events: none;
   }
@@ -91,7 +87,7 @@
   
   @keyframes smokeRise {
     0% { opacity: 0.8; height: 10px; top: -20px; }
-    100% { opacity: 0; height: 100px; top: -120px; transform: translateX(-50%) scale(3); }
+    100% { opacity: 0; height: 100px; top: -120px; transform: translateY(-50px) scale(3); }
   }
   
   .wish-message {
@@ -114,7 +110,11 @@
 <div class="candle-container" onclick="blowCandle()">
   <div class="candle">
     <div class="wick"></div>
-    <div class="flame" id="flame"></div>
+    
+    <div class="flame-wrapper" id="flameWrapper">
+      <div class="flame"></div>
+    </div>
+    
     <div class="smoke" id="smoke"></div>
   </div>
 </div>
@@ -127,22 +127,22 @@
     if (isBlown) return;
     isBlown = true;
     
-    const flame = document.getElementById('flame');
+    const flameWrapper = document.getElementById('flameWrapper');
     const smoke = document.getElementById('smoke');
     const message = document.getElementById('message');
     const title = document.getElementById('title');
 
-    // 1. Alevi söndür (CSS animation:none ve scale:0 devreye girer)
-    flame.classList.add('out');
+    // 1. Kapsülü küçült (İçindeki ateşle beraber küçülecek)
+    flameWrapper.classList.add('out');
     
-    // 2. Duman çıksın
+    // 2. Duman çıkar
     smoke.classList.add('rise'); 
     
-    // 3. Yazılar değişsin
+    // 3. Yazı değişimi
     title.style.opacity = '0';
     message.classList.add('fade-in');
     
-    // 4. YÖNLENDİRME (Tam 2.5 saniye sonra, alev tamamen gittikten sonra)
+    // 4. Yönlendirme (2.5 saniye sonra)
     setTimeout(() => {
       window.location.href = "final.html";
     }, 2500);
