@@ -4,33 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rua 🌸</title>
-
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
 <style>
-/* 1. GARANTİ ÇÖZÜM: Body ayarlarını serbest bıraktım */
 body {
   margin: 0;
-  padding: 40px 20px; /* Üstten alttan boşluk bıraktım */
+  padding: 40px 20px;
   min-height: 100vh;
   background: linear-gradient(135deg,#1a1a2e,#16213e);
   font-family: 'Poppins', sans-serif;
   color: white;
   box-sizing: border-box;
-  
-  /* Sayfa ortalama kodunu değiştirdim, artık kesilme yapamaz */
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* İçerik azsa ortada durur */
+  justify-content: center;
 }
-
-/* 2. Kart uzarsa sayfa kaydırılabilir olsun */
-html {
-  overflow-y: scroll; /* Scrollu zorla aç */
-}
-
+html { overflow-y: scroll; }
 .card {
   background: rgba(255,255,255,0.08);
   backdrop-filter: blur(20px);
@@ -40,12 +30,9 @@ html {
   max-width: 420px;
   text-align: center;
   box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-  
-  /* İçerik çok uzarsa sayfanın tepesine yapışmasın */
   margin-top: auto; 
   margin-bottom: auto;
 }
-
 img {
   width: 100%;
   border-radius: 18px;
@@ -54,25 +41,18 @@ img {
   transition: transform 0.1s;
   -webkit-tap-highlight-color: transparent;
 }
-
 img:active { transform: scale(0.95); }
-
 .small { font-size: 14px; opacity: 0.7; margin-bottom: 20px; }
-
-/* Başlangıçta gizli */
 .hidden-content {
   display: none;
   margin-top: 20px;
   animation: fadeIn 1s forwards;
 }
-
 h2 { margin-bottom: 5px; color: #ff7eb3; }
-
-/* Butonu görünür yapmak için arka plan rengi verdim */
 .final-btn {
   margin-top: 25px; 
   padding: 15px 30px; 
-  background: rgba(255,255,255,0.1); /* Hafif beyaz zemin */
+  background: rgba(255,255,255,0.1); 
   color: white; 
   border: 1px solid rgba(255,255,255,0.6); 
   border-radius: 12px; 
@@ -83,78 +63,55 @@ h2 { margin-bottom: 5px; color: #ff7eb3; }
   width: 100%;
   font-weight: 600;
 }
-
 .final-btn:hover {
   background-color: white;
   color: #1a1a2e;
   transform: translateY(-2px);
 }
-
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 </style>
 </head>
-
 <body>
-
 <audio autoplay loop>
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
 <div class="card">
   <img src="foto.jpg" alt="Rua" id="ruaFoto" onclick="patlat()">
-  
   <p class="small">(Sürpriz için fotoğrafa dokun 👆)</p>
-
   <h2>İyi ki varsın Rua</h2>
   <p>Bazı insanlar sessizce dünyayı güzelleştirir.</p>
 
   <div class="hidden-content" id="secretArea">
-    
     <div style="margin-bottom: 20px;">
       <p style="font-size: 1.2em; font-weight: bold; color: #ff4fa3;">💖 Bu kalp sana ait!</p>
       <p>Nice mutlu yaşlara...</p>
     </div>
 
     <button class="final-btn" onclick="window.location.href='mum.html'">
-      ✨ SON BİR NOT
+      ✨ DİLEK TUTMAYA GİT
     </button>
-  
   </div>
 </div>
 
 <script>
 function patlat() {
-  const secretArea = document.getElementById("secretArea");
-  
-  // Gizli alanı aç
-  secretArea.style.display = "block";
-
-  // Konfeti
+  document.getElementById("secretArea").style.display = "block";
   var duration = 3 * 1000;
   var animationEnd = Date.now() + duration;
   var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
-
   var interval = setInterval(function() {
     var timeLeft = animationEnd - Date.now();
-
-    if (timeLeft <= 0) {
-      return clearInterval(interval);
-    }
-
+    if (timeLeft <= 0) return clearInterval(interval);
     var particleCount = 50 * (timeLeft / duration);
     confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
     confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
   }, 250);
 }
-
-function randomInRange(min, max) {
-  return Math.random() * (max - min) + min;
-}
+function randomInRange(min, max) { return Math.random() * (max - min) + min; }
 </script>
-
 </body>
 </html>
-
