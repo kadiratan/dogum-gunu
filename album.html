@@ -4,45 +4,235 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kapanış 🎬</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
 <style>
-  body { margin: 0; height: 100vh; background: #000; font-family: 'Poppins', sans-serif; color: white; display: flex; justify-content: center; align-items: center; overflow: hidden; text-align: center; }
-  .bg-glow { position: absolute; width: 300px; height: 300px; background: radial-gradient(circle, rgba(255, 79, 163, 0.2) 0%, rgba(0,0,0,0) 70%); animation: pulse 4s infinite alternate; }
-  @keyframes pulse { from { opacity: 0.5; transform: scale(1); } to { opacity: 1; transform: scale(1.5); } }
-  .container { position: relative; z-index: 2; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); padding: 40px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 50px rgba(0,0,0,0.5); max-width: 350px; width: 90%; animation: slideUp 1s ease-out; }
-  .profile-img { width: 120px; height: 120px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(255, 79, 163, 0.8)); margin-bottom: 20px; animation: float 3s ease-in-out infinite alternate; }
-  @keyframes float { from { transform: translateY(0); } to { transform: translateY(-10px); } }
-  h1 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin: 0 0 10px 0; color: #ffeb3b; }
-  p { font-size: 0.9rem; color: rgba(255,255,255,0.8); line-height: 1.6; margin-bottom: 20px; }
-  .credits { font-size: 0.85rem; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; margin-bottom: 25px; text-align: left; }
-  .credits div { display: flex; justify-content: space-between; margin-bottom: 8px; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 5px; }
-  .role { color: #ff4fa3; font-weight: bold; }
-  .btn { padding: 12px 30px; background: white; color: black; border: none; border-radius: 50px; font-weight: bold; cursor: pointer; transition: 0.3s; text-decoration: none; display: inline-block; }
-  .btn:hover { background: #ff4fa3; color: white; transform: scale(1.05); }
-  @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  body {
+    margin: 0;
+    height: 100vh;
+    background-color: #050505;
+    background-image: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #000 100%);
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    perspective: 1000px; /* 3D derinlik için şart */
+  }
+
+  /* KART YAPISI (3D Tilt İçin) */
+  .card-wrapper {
+    position: relative;
+    width: 320px;
+    padding: 3px; /* Neon sınır kalınlığı */
+    border-radius: 30px;
+    background: linear-gradient(60deg, #ff0055, #00ddff, #ff0055, #00ddff);
+    background-size: 300% 300%;
+    animation: borderAnim 4s ease infinite;
+    transform-style: preserve-3d;
+    transform: rotateX(0deg) rotateY(0deg);
+    transition: transform 0.1s; /* Pürüzsüz hareket */
+    box-shadow: 0 0 20px rgba(0, 221, 255, 0.3);
+  }
+
+  @keyframes borderAnim {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .container {
+    background: rgba(15, 15, 20, 0.95);
+    backdrop-filter: blur(20px);
+    padding: 40px 30px;
+    border-radius: 26px; /* Dış çerçeveye uysun diye */
+    text-align: center;
+    position: relative;
+    transform: translateZ(20px); /* İçerik öne çıksın */
+  }
+
+  /* Sticker */
+  .profile-img {
+    width: 130px;
+    height: 130px;
+    object-fit: contain; 
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+    margin-bottom: 15px;
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,0.1);
+    transform: translateZ(30px); /* Resim daha da öne çıksın */
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    margin: 0;
+    background: linear-gradient(to right, #ffd700, #ffecb3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transform: translateZ(25px);
+  }
+
+  p {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.6;
+    margin-bottom: 25px;
+    transform: translateZ(20px);
+  }
+
+  /* Credits Alanı */
+  .credits {
+    font-size: 0.85rem;
+    background: rgba(255,255,255,0.05);
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    text-align: left;
+    border: 1px solid rgba(255,255,255,0.1);
+    transform: translateZ(15px);
+  }
+
+  .credits div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    border-bottom: 1px dashed rgba(255,255,255,0.1);
+    padding-bottom: 5px;
+  }
+  
+  .role { color: #00ddff; font-weight: 600; }
+  
+  /* Daktilo Efekti İçin */
+  .typing-effect {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 2px solid #ff0055; /* İmleç */
+    animation: typing 3s steps(30, end), blink-caret 0.75s step-end infinite;
+    max-width: 100%;
+  }
+  
+  @keyframes typing { from { width: 0; } to { width: 100%; } }
+  @keyframes blink-caret { from, to { border-color: transparent; } 50% { border-color: #ff0055; } }
+
+  /* Sosyal Medya İkonları (Süs) */
+  .socials {
+    margin-top: 15px;
+    transform: translateZ(25px);
+  }
+  .socials a {
+    color: rgba(255,255,255,0.6);
+    margin: 0 10px;
+    font-size: 1.2rem;
+    transition: 0.3s;
+    text-decoration: none;
+  }
+  .socials a:hover { color: #fff; transform: scale(1.2); }
+
+  .btn {
+    margin-top: 20px;
+    padding: 12px 35px;
+    background: white;
+    color: black;
+    border: none;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: 0 5px 15px rgba(255,255,255,0.2);
+    transform: translateZ(30px);
+  }
+  .btn:hover { background: #00ddff; color: #000; transform: translateZ(30px) scale(1.05); }
+
 </style>
 </head>
 <body>
-<div class="bg-glow"></div>
-<div class="container">
-  <img src="sticker.jpg" alt="Kadir Sticker" class="profile-img">
-  <h1>Mutlu Yıllar!</h1>
-  <p>Yeni yaşında her şey gönlünce olsun.<br>Beğenmediysen de çaktırma,<br>idare et. 😄</p>
-  <div class="credits">
-    <div><span class="role">Hazırlayan:</span> <span>Engineer Kadir😎</span></div>
-    <div><span class="role">Kodlama:</span> <span>ChatGPT</span></div>
+
+<div class="card-wrapper" id="card3D">
+  <div class="container">
+    <img src="sticker.jpg" alt="Kadir Sticker" class="profile-img">
+
+    <h1>Mutlu Yıllar!</h1>
+
+    <p>
+      Yeni yaşında her şey gönlünce olsun.<br>
+      Beğenmediysen de çaktırma,<br>idare et. 😄
+    </p>
+
+    <div class="credits">
+      <div>
+        <span class="role">Hazırlayan:</span> 
+        <span class="typing-effect">Engineer Kadir😎</span>
+      </div>
+      <div>
+        <span class="role">Kodlama:</span> 
+        <span>ChatGPT & Kadir</span>
+      </div>
+    </div>
+
+    <div class="socials">
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fas fa-heart"></i></a>
+    </div>
+
+    <p style="font-size: 9px; opacity: 0.3; margin-top: 15px; margin-bottom: 0;">(Kadir Productions © 2026)</p>
+
+    <a href="index.html" class="btn">Başa Sar ↺</a>
   </div>
-  <p style="font-size: 10px; opacity: 0.4; margin-top: -10px;">(Kadir Productions gururla sunar)</p>
-  <a href="index.html" class="btn">Başa Sar ↺</a>
 </div>
 
-<audio id="bgMusic" loop> <source src="music.mp3" type="audio/mpeg"> </audio>
+<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
 <script>
+  // --- MÜZİK KODU ---
   const audio = document.getElementById("bgMusic");
   const savedTime = localStorage.getItem("songTime");
   if (savedTime) audio.currentTime = parseFloat(savedTime);
   audio.play().catch(() => { document.body.addEventListener('click', () => { audio.play(); }, { once: true }); });
   setInterval(() => { if (!audio.paused) localStorage.setItem("songTime", audio.currentTime); }, 500);
+
+  // --- 3D TILT EFEKTİ (Sihir Burada) ---
+  const card = document.getElementById('card3D');
+  const body = document.querySelector('body');
+
+  // Fare/Parmak Hareketini Takip Et
+  body.addEventListener('mousemove', (e) => {
+    rotateCard(e.clientX, e.clientY);
+  });
+
+  body.addEventListener('touchmove', (e) => {
+    rotateCard(e.touches[0].clientX, e.touches[0].clientY);
+  });
+
+  function rotateCard(x, y) {
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+
+    // Merkeze göre hesapla (-1 ile 1 arası değer)
+    const xVal = (x - windowWidth / 2) / (windowWidth / 2);
+    const yVal = (y - windowHeight / 2) / (windowHeight / 2);
+
+    // Dönüş açısını ayarla (Max 20 derece)
+    // X ekseninde dönüş için Y değerini kullanıyoruz (ters orantı)
+    card.style.transform = `rotateY(${xVal * 20}deg) rotateX(${-yVal * 20}deg)`;
+  }
+
+  // Fare/Parmak çekilince düzelsin
+  body.addEventListener('mouseleave', resetCard);
+  body.addEventListener('touchend', resetCard);
+
+  function resetCard() {
+    card.style.transform = `rotateY(0deg) rotateX(0deg)`;
+  }
 </script>
+
 </body>
 </html>
