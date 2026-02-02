@@ -37,26 +37,25 @@
     background: linear-gradient(#e6e6e6, #d9d9d9, #bfbfbf);
     border-radius: 4px; position: relative;
     box-shadow: inset 0 -20px 20px rgba(0,0,0,0.1), 0 0 20px rgba(0,0,0,0.5);
-    display: flex; justify-content: center; /* Ateşi ortalamak için */
+    display: flex; justify-content: center;
   }
   
   .wick {
     position: absolute; top: -15px; width: 4px; height: 15px; background: #333; border-radius: 2px; z-index: 1;
   }
 
-  /* --- YENİ SİSTEM: ALEV KAPSÜLÜ --- */
-  /* Bu kutu Sönme işlemini yapacak */
+  /* KAPSÜL: Ateşi içinde tutan kutu */
   .flame-wrapper {
     position: absolute;
-    top: -55px; /* Fitilin üzerine */
+    top: -55px; 
     width: 20px;
     height: 40px;
     transform-origin: bottom center;
-    transition: all 2s ease-in-out; /* 2 Saniyede yavaşça yok ol */
     z-index: 2;
+    /* JS ile müdahale edeceğimiz için buraya transition yazmıyorum */
   }
 
-  /* Bu kutu Titreme işlemini yapacak (İçeride) */
+  /* ATEŞİN KENDİSİ: Sadece titrer */
   .flame {
     width: 100%;
     height: 100%;
@@ -65,12 +64,6 @@
     box-shadow: 0 0 20px #ffbb00, 0 0 50px #ff4d00;
     animation: flicker 1s infinite alternate;
     transform-origin: center bottom;
-  }
-
-  /* ALEV SÖNDÜĞÜNDE BU SINIF GELECEK */
-  .flame-wrapper.out {
-    transform: scale(0); /* Kapsülü sıfıra indir */
-    opacity: 0; /* Görünmez yap */
   }
 
   @keyframes flicker {
@@ -110,11 +103,9 @@
 <div class="candle-container" onclick="blowCandle()">
   <div class="candle">
     <div class="wick"></div>
-    
     <div class="flame-wrapper" id="flameWrapper">
       <div class="flame"></div>
     </div>
-    
     <div class="smoke" id="smoke"></div>
   </div>
 </div>
@@ -127,22 +118,30 @@
     if (isBlown) return;
     isBlown = true;
     
+    // Elementleri seç
     const flameWrapper = document.getElementById('flameWrapper');
     const smoke = document.getElementById('smoke');
     const message = document.getElementById('message');
     const title = document.getElementById('title');
 
-    // 1. Kapsülü küçült (İçindeki ateşle beraber küçülecek)
-    flameWrapper.classList.add('out');
+    // --- BURASI ÇOK ÖNEMLİ: JS İLE ZORLA SÖNDÜRME ---
+    // CSS class eklemek yerine direkt stilini değiştiriyoruz.
+    // Bu komutun çalışmama ihtimali YOKTUR.
     
-    // 2. Duman çıkar
+    flameWrapper.style.transition = "all 2s ease-out"; // 2 saniyede değişsin
+    flameWrapper.style.opacity = "0"; // Görünmez ol
+    flameWrapper.style.transform = "scale(0)"; // Boyutunu sıfırla
+    
+    // --------------------------------------------------
+
+    // Duman hemen çıksın
     smoke.classList.add('rise'); 
     
-    // 3. Yazı değişimi
+    // Yazılar değişsin
     title.style.opacity = '0';
     message.classList.add('fade-in');
     
-    // 4. Yönlendirme (2.5 saniye sonra)
+    // Yönlendirme
     setTimeout(() => {
       window.location.href = "final.html";
     }, 2500);
