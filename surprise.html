@@ -9,36 +9,39 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-body{
-  margin:0;
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+/* CSS DÜZELTMELERİ */
+body {
+  margin: 0;
+  min-height: 100vh; /* Sabit yükseklik yerine minimum yükseklik */
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: linear-gradient(135deg,#1a1a2e,#16213e);
   font-family: 'Poppins', sans-serif;
-  color:white;
-  /* ÖNEMLİ: Ekran küçük gelirse aşağı kayabilsin diye bunu değiştirdim */
-  overflow-y: auto; 
+  color: white;
+  padding: 20px; /* Kenarlardan boşluk */
+  box-sizing: border-box;
 }
 
-.card{
+.card {
   background: rgba(255,255,255,0.08);
   backdrop-filter: blur(20px);
   border-radius: 24px;
   padding: 30px;
-  width: 90%;
+  width: 100%;
   max-width: 420px;
   text-align: center;
   box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-  /* Kart çok uzarsa sayfa içinde ortalansın */
-  margin: 20px 0;
+  position: relative;
+  z-index: 10; /* Konfetilerin üstünde dursun */
+  /* Kartın boyutu içeriğe göre otomatik uzasın */
+  height: auto; 
 }
 
 img {
-  width:100%;
-  border-radius:18px;
-  margin-bottom:15px;
+  width: 100%;
+  border-radius: 18px;
+  margin-bottom: 15px;
   cursor: pointer;
   transition: transform 0.1s;
   -webkit-tap-highlight-color: transparent;
@@ -48,9 +51,9 @@ img:active {
   transform: scale(0.95);
 }
 
-.small{ font-size:14px; opacity:0.7; margin-bottom: 20px; }
+.small { font-size: 14px; opacity: 0.7; margin-bottom: 20px; }
 
-/* Hem mesaj hem buton başlangıçta gizli */
+/* Başlangıçta gizli olan kısım */
 .hidden-content {
   display: none;
   margin-top: 20px;
@@ -118,10 +121,10 @@ h2 { margin-bottom: 5px; color: #ff7eb3; }
 function patlat() {
   const secretArea = document.getElementById("secretArea");
   
-  // 1. Gizli alanı (mesaj + buton) görünür yap
+  // 1. Gizli alanı aç
   secretArea.style.display = "block";
 
-  // 2. Konfeti yağdır
+  // 2. Konfeti patlat
   var duration = 3 * 1000;
   var animationEnd = Date.now() + duration;
   var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
