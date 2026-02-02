@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rua İçin 💫</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background-color: #000000; /* Tamamen siyah arka plan */
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Playfair Display', serif;
+  }
+
+  /* Çiçeklerin Alanı */
+  .flower-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Tıklamayı engelle */
+  }
+
+  /* Soyut Çiçek Tasarımı (CSS ile) */
+  .flower {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    opacity: 0;
+    transform: scale(0);
+    animation: bloom 3s ease-in-out forwards;
+  }
+
+  /* Çiçeğin merkezi */
+  .flower::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 20px; height: 20px;
+    background: #fff5d7; /* Hafif sarımsı beyaz */
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 20px #fff5d7, 0 0 40px #ffd700; /* Parlama efekti */
+  }
+
+  /* Yapraklar (Soyut ışık huzmeleri) */
+  .petal {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 30px; height: 80px;
+    background: linear-gradient(to top, rgba(255,255,255,0.8), transparent);
+    border-radius: 50% 50% 0 0;
+    transform-origin: bottom center;
+    box-shadow: 0 -10px 20px rgba(255,255,255,0.3);
+  }
+
+  /* Yaprakların Dönüşleri */
+  .p1 { transform: translate(-50%, -100%) rotate(0deg); }
+  .p2 { transform: translate(-50%, -100%) rotate(45deg); }
+  .p3 { transform: translate(-50%, -100%) rotate(90deg); }
+  .p4 { transform: translate(-50%, -100%) rotate(135deg); }
+  .p5 { transform: translate(-50%, -100%) rotate(180deg); }
+  .p6 { transform: translate(-50%, -100%) rotate(225deg); }
+  .p7 { transform: translate(-50%, -100%) rotate(270deg); }
+  .p8 { transform: translate(-50%, -100%) rotate(315deg); }
+
+  /* Açılma Animasyonu */
+  @keyframes bloom {
+    0% { opacity: 0; transform: scale(0) rotate(0deg); }
+    50% { opacity: 0.8; }
+    100% { opacity: 1; transform: scale(1) rotate(360deg); }
+  }
+
+  /* Ana Yazı Alanı */
+  .message-container {
+    z-index: 10;
+    text-align: center;
+    color: white;
+    opacity: 0; /* Başlangıçta gizli */
+    animation: contentFadeIn 2s ease-in-out 3s forwards; /* 3 saniye sonra başla */
+    padding: 30px;
+    border-left: 3px solid rgba(255,255,255,0.3);
+    border-right: 3px solid rgba(255,255,255,0.3);
+    background: rgba(0,0,0,0.4); /* Yazının okunması için hafif karartı */
+    backdrop-filter: blur(5px);
+  }
+
+  .message-container h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+    letter-spacing: 3px;
+    background: linear-gradient(to right, #ffffff, #aba0a0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .message-container p {
+    font-size: 1.3em;
+    line-height: 1.8;
+    opacity: 0.9;
+    max-width: 600px;
+  }
+
+  /* Geri Dön Butonu */
+  .back-btn {
+    margin-top: 40px;
+    padding: 12px 30px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.5);
+    color: rgba(255,255,255,0.7);
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .back-btn:hover {
+    background: white;
+    color: black;
+    border-color: white;
+  }
+
+  @keyframes contentFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<audio autoplay loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="flower-container">
+  <div class="flower" style="top: 20%; left: 20%; animation-delay: 0.2s;">
+    <div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div><div class="petal p4"></div>
+    <div class="petal p5"></div><div class="petal p6"></div><div class="petal p7"></div><div class="petal p8"></div>
+  </div>
+  
+  <div class="flower" style="top: 70%; left: 80%; animation-delay: 0.5s;">
+    <div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div><div class="petal p4"></div>
+    <div class="petal p5"></div><div class="petal p6"></div><div class="petal p7"></div><div class="petal p8"></div>
+  </div>
+
+  <div class="flower" style="top: 80%; left: 30%; animation-delay: 1s; transform: scale(0.8);">
+    <div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div><div class="petal p4"></div>
+    <div class="petal p5"></div><div class="petal p6"></div><div class="petal p7"></div><div class="petal p8"></div>
+  </div>
+
+  <div class="flower" style="top: 30%; left: 70%; animation-delay: 1.2s; transform: scale(0.9);">
+    <div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div><div class="petal p4"></div>
+    <div class="petal p5"></div><div class="petal p6"></div><div class="petal p7"></div><div class="petal p8"></div>
+  </div>
+  
+   <div class="flower" style="top: 10%; left: 50%; animation-delay: 1.8s; transform: scale(0.7);">
+    <div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div><div class="petal p4"></div>
+    <div class="petal p5"></div><div class="petal p6"></div><div class="petal p7"></div><div class="petal p8"></div>
+  </div>
+</div>
+
+<div class="message-container">
+  <h1>Rua</h1>
+  <p>
+    Hayat, senin gibi değerli insanlarla karşılaştığımızda anlam kazanır.
+    Varlığınla etrafına kattığın ışık hiç sönmesin.
+    Yeni yaşında tüm güzellikler seni bulsun, tıpkı karanlıkta açan bu çiçekler gibi...
+  </p>
+  <p style="margin-top:20px; font-size: 1em; opacity: 0.7;">İyi ki doğdun, iyi ki varsın.</p>
+  
+  <button class="back-btn" onclick="location.href='surprise.html'">ANA SAYFAYA DÖN</button>
+</div>
+
+</body>
+</html>
