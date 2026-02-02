@@ -41,6 +41,8 @@
     position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
     width: 4px; height: 15px; background: #333; border-radius: 2px;
   }
+  
+  /* Alev Normal Hali */
   .flame {
     position: absolute; top: -45px; left: 50%; transform: translateX(-50%);
     width: 20px; height: 40px;
@@ -48,13 +50,25 @@
     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
     box-shadow: 0 0 20px #ffbb00, 0 0 50px #ff4d00;
     animation: flicker 1s infinite alternate;
-    transform-origin: center bottom; transition: all 0.5s;
+    transform-origin: center bottom; 
+    transition: all 0.3s ease-out; /* Sönme hızını artırdım */
   }
+  
   @keyframes flicker {
     0% { transform: translateX(-50%) scale(1); opacity: 1; }
     100% { transform: translateX(-50%) scale(1) skewX(0deg); opacity: 1; }
   }
-  .flame.out { opacity: 0; transform: translateX(-50%) scale(0.5); box-shadow: none; }
+
+  /* --- DÜZELTİLEN KISIM BURASI --- */
+  /* Alev Sönmüş Hali (Garanti Çözüm) */
+  .flame.out {
+    opacity: 0 !important; /* Kesinlikle görünmez ol */
+    transform: translateX(-50%) scale(0.1) !important; /* İyice küçült */
+    box-shadow: none !important; /* Parlamayı kapat */
+    background: none !important; /* Kırmızı rengi tamamen kaldır */
+  }
+  /* ------------------------------- */
+
   .smoke {
     position: absolute; top: -30px; left: 50%; transform: translateX(-50%);
     width: 4px; height: 40px; background: rgba(255,255,255,0.6);
@@ -101,12 +115,15 @@
     const message = document.getElementById('message');
     const title = document.getElementById('title');
 
+    // Alevi söndür sınıfını ekle
     flame.classList.add('out');
-    setTimeout(() => { smoke.classList.add('rise'); }, 300);
+    
+    // Dumanı çıkar
+    setTimeout(() => { smoke.classList.add('rise'); }, 100); // Duman daha hızlı çıksın
+    
     title.style.opacity = '0';
     setTimeout(() => { message.classList.add('fade-in'); }, 800);
     
-    // Yönlendirme BURADA: 3.5 saniye sonra final.html sayfasına gider
     setTimeout(() => {
       window.location.href = "final.html";
     }, 3500);
