@@ -17,15 +17,49 @@
     font-family: 'Playfair Display', serif;
   }
 
+  /* --- YENİ EKLENTİ: SÜZÜLEN IŞIK TANECİKLERİ --- */
+  .particle-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Çiçeklerin arkasında */
+    pointer-events: none;
+  }
+
+  .particle {
+    position: absolute;
+    background: rgba(255, 245, 215, 0.7); /* Hafif altın sarısı beyaz */
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(255, 245, 215, 0.5); /* Parlama efekti */
+    animation: floatUp linear infinite;
+    opacity: 0;
+  }
+
+  @keyframes floatUp {
+    0% {
+      transform: translateY(100vh) scale(0);
+      opacity: 0;
+    }
+    20% { opacity: 0.8; transform: scale(1); }
+    80% { opacity: 0.5; }
+    100% {
+      transform: translateY(-10vh) scale(0.5);
+      opacity: 0;
+    }
+  }
+  /* ------------------------------------------ */
+
+
   /* Çiçeklerin Alanı */
   .flower-container {
     position: absolute;
     width: 100%;
     height: 100%;
-    pointer-events: none; /* Tıklamayı engelle */
+    pointer-events: none;
+    z-index: 5;
   }
 
-  /* Soyut Çiçek Tasarımı (CSS ile) */
+  /* Soyut Çiçek Tasarımı */
   .flower {
     position: absolute;
     width: 100px;
@@ -41,13 +75,13 @@
     position: absolute;
     top: 50%; left: 50%;
     width: 20px; height: 20px;
-    background: #fff5d7; /* Hafif sarımsı beyaz */
+    background: #fff5d7;
     border-radius: 50%;
     transform: translate(-50%, -50%);
-    box-shadow: 0 0 20px #fff5d7, 0 0 40px #ffd700; /* Parlama efekti */
+    box-shadow: 0 0 20px #fff5d7, 0 0 40px #ffd700;
   }
 
-  /* Yapraklar (Soyut ışık huzmeleri) */
+  /* Yapraklar (Işık huzmeleri) */
   .petal {
     position: absolute;
     top: 50%; left: 50%;
@@ -58,7 +92,6 @@
     box-shadow: 0 -10px 20px rgba(255,255,255,0.3);
   }
 
-  /* Yaprakların Dönüşleri */
   .p1 { transform: translate(-50%, -100%) rotate(0deg); }
   .p2 { transform: translate(-50%, -100%) rotate(45deg); }
   .p3 { transform: translate(-50%, -100%) rotate(90deg); }
@@ -68,32 +101,38 @@
   .p7 { transform: translate(-50%, -100%) rotate(270deg); }
   .p8 { transform: translate(-50%, -100%) rotate(315deg); }
 
-  /* Açılma Animasyonu */
   @keyframes bloom {
     0% { opacity: 0; transform: scale(0) rotate(0deg); }
     50% { opacity: 0.8; }
     100% { opacity: 1; transform: scale(1) rotate(360deg); }
   }
 
-  /* Ana Yazı Alanı */
+  /* Ana Yazı Alanı - GÜNCELLENDİ */
   .message-container {
     z-index: 10;
     text-align: center;
     color: white;
-    opacity: 0; /* Başlangıçta gizli */
-    animation: contentFadeIn 2s ease-in-out 3s forwards; /* 3 saniye sonra başla */
-    padding: 30px;
-    border-left: 3px solid rgba(255,255,255,0.3);
-    border-right: 3px solid rgba(255,255,255,0.3);
-    background: rgba(0,0,0,0.4); /* Yazının okunması için hafif karartı */
-    backdrop-filter: blur(5px);
+    opacity: 0;
+    /* Önce belirsin, sonra parlamaya başlasın */
+    animation: contentFadeIn 2s ease-in-out 3s forwards, softGlow 5s ease-in-out infinite alternate 5s;
+    padding: 40px;
+    border-radius: 20px; /* Köşeleri yumuşattım */
+    border: 1px solid rgba(255, 245, 215, 0.2); /* İnce altın çerçeve */
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(10px);
+  }
+
+  /* YENİ EFEKT: Yazı kutusunun nefes alan parıltısı */
+  @keyframes softGlow {
+    0% { box-shadow: 0 0 20px rgba(255, 245, 215, 0.0); }
+    100% { box-shadow: 0 0 50px rgba(255, 245, 215, 0.3); }
   }
 
   .message-container h1 {
     font-size: 3em;
-    margin-bottom: 20px;
+    margin: 0 0 20px 0;
     letter-spacing: 3px;
-    background: linear-gradient(to right, #ffffff, #aba0a0);
+    background: linear-gradient(to right, #ffffff, #d4af37); /* Altın sarısı geçiş */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
@@ -103,11 +142,11 @@
     line-height: 1.8;
     opacity: 0.9;
     max-width: 600px;
+    margin-bottom: 20px;
   }
 
-  /* Geri Dön Butonu */
   .back-btn {
-    margin-top: 40px;
+    margin-top: 30px;
     padding: 12px 30px;
     background: transparent;
     border: 1px solid rgba(255,255,255,0.5);
@@ -120,14 +159,14 @@
   }
 
   .back-btn:hover {
-    background: white;
-    color: black;
+    background: rgba(255, 245, 215, 0.2);
+    color: white;
     border-color: white;
   }
 
   @keyframes contentFadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(20px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
   }
 </style>
 </head>
@@ -137,27 +176,34 @@
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
+<div class="particle-container">
+  <div class="particle" style="width: 4px; height: 4px; left: 10%; animation-duration: 15s; animation-delay: 0s;"></div>
+  <div class="particle" style="width: 6px; height: 6px; left: 30%; animation-duration: 20s; animation-delay: 2s;"></div>
+  <div class="particle" style="width: 3px; height: 3px; left: 50%; animation-duration: 18s; animation-delay: 5s;"></div>
+  <div class="particle" style="width: 5px; height: 5px; left: 70%; animation-duration: 22s; animation-delay: 1s;"></div>
+  <div class="particle" style="width: 4px; height: 4px; left: 90%; animation-duration: 16s; animation-delay: 3s;"></div>
+  <div class="particle" style="width: 3px; height: 3px; left: 20%; animation-duration: 25s; animation-delay: 7s;"></div>
+  <div class="particle" style="width: 5px; height: 5px; left: 60%; animation-duration: 19s; animation-delay: 4s;"></div>
+  <div class="particle" style="width: 4px; height: 4px; left: 80%; animation-duration: 21s; animation-delay: 6s;"></div>
+</div>
+
 <div class="flower-container">
   <div class="flower" style="top: 20%; left: 20%; animation-delay: 0.2s;">
     <div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div><div class="petal p4"></div>
     <div class="petal p5"></div><div class="petal p6"></div><div class="petal p7"></div><div class="petal p8"></div>
   </div>
-  
   <div class="flower" style="top: 70%; left: 80%; animation-delay: 0.5s;">
     <div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div><div class="petal p4"></div>
     <div class="petal p5"></div><div class="petal p6"></div><div class="petal p7"></div><div class="petal p8"></div>
   </div>
-
   <div class="flower" style="top: 80%; left: 30%; animation-delay: 1s; transform: scale(0.8);">
     <div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div><div class="petal p4"></div>
     <div class="petal p5"></div><div class="petal p6"></div><div class="petal p7"></div><div class="petal p8"></div>
   </div>
-
   <div class="flower" style="top: 30%; left: 70%; animation-delay: 1.2s; transform: scale(0.9);">
     <div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div><div class="petal p4"></div>
     <div class="petal p5"></div><div class="petal p6"></div><div class="petal p7"></div><div class="petal p8"></div>
   </div>
-  
    <div class="flower" style="top: 10%; left: 50%; animation-delay: 1.8s; transform: scale(0.7);">
     <div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div><div class="petal p4"></div>
     <div class="petal p5"></div><div class="petal p6"></div><div class="petal p7"></div><div class="petal p8"></div>
