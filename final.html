@@ -103,9 +103,6 @@
 </style>
 </head>
 <body>
-<audio autoplay loop>
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
 
 <div class="particle-container">
   <div class="particle" style="width: 4px; height: 4px; left: 10%; animation-duration: 15s; animation-delay: 0s;"></div>
@@ -135,14 +132,14 @@
   </p>
   <p style="margin-top:20px; font-size: 1em; opacity: 0.7;">İyi ki doğdun, iyi ki varsın Engineer Rua Hanım</p>
   
-  <button class="back-btn" onclick="location.href='album.html'">🎬تمووووم,  تمووووم, انتهى</button>
+  <button class="back-btn" onclick="location.href='yildiz.html'">🎬تمووووم,  تمووووم, انتهى</button>
   
   <p style="font-size: 10px; margin-top: 15px; opacity: 0.3;">(Ekranda herhangi bir yere dokun...)</p>
 </div>
 
 <script>
   document.addEventListener('click', function(e) {
-    if(e.target.tagName === 'BUTTON') return; // Butona basınca patlama olmasın
+    if(e.target.tagName === 'BUTTON') return; 
     const x = e.clientX;
     const y = e.clientY;
     createBurst(x, y);
@@ -159,13 +156,8 @@
       const p = document.createElement('div');
       p.className = 'burst-particle';
       p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-      
-      // --- BURAYI DEĞİŞTİRDİM (BÜYÜTTÜM) ---
-      // Eskiden: Math.random() * 6 + 2 (2px ile 8px arasıydı)
-      // Şimdi: Math.random() * 12 + 6 (6px ile 18px arası)
       p.style.width = Math.random() * 12 + 6 + 'px'; 
       p.style.height = p.style.width;
-      
       const angle = Math.random() * Math.PI * 2;
       const velocity = Math.random() * 100 + 50;
       const tx = Math.cos(angle) * velocity + 'px';
@@ -177,7 +169,35 @@
     setTimeout(() => { burst.remove(); }, 1000);
   }
 </script>
+
+<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  const audio = document.getElementById("bgMusic");
+
+  // Hafızadaki süreyi kontrol et
+  const savedTime = localStorage.getItem("songTime");
+  if (savedTime) {
+    audio.currentTime = parseFloat(savedTime);
+  }
+
+  // Oynatmaya çalış
+  var playPromise = audio.play();
+  if (playPromise !== undefined) {
+    playPromise.then(_ => {}).catch(error => {
+      document.body.addEventListener('click', () => { audio.play(); }, { once: true });
+    });
+  }
+
+  // Süreyi kaydet
+  setInterval(() => {
+    if (!audio.paused) {
+      localStorage.setItem("songTime", audio.currentTime);
+    }
+  }, 500);
+</script>
+
 </body>
 </html>
-
-
