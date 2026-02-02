@@ -4,22 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Engineer Rua</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; }
   
   body {
     margin: 0;
     height: 100vh;
-    font-family: 'Poppins', sans-serif;
-    /* YENİ ARKA PLAN: Beyazdan Yumuşak Pembeye */
-    background: linear-gradient(to bottom right, #fff0f5, #ffe4e1);
+    font-family: 'Quicksand', sans-serif; /* Daha yumuşak, tatlı font */
+    /* Tam kızlara hitap eden "Pastel Sunset" arka plan */
+    background: linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%);
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
     position: relative;
-    color: #333; /* Genel yazı rengi koyu gri */
+    color: #555;
   }
 
   /* KELİMELERİN KATMANI */
@@ -31,22 +31,21 @@
     z-index: 1;
   }
 
-  /* KELİME STİLİ (Daha soft) */
+  /* KELİME STİLİ (Daha zarif) */
   .tag {
     position: absolute;
-    /* Yarı saydam beyaz arka plan */
-    background: rgba(255, 255, 255, 0.6);
-    padding: 10px 22px;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 10px 20px;
     border-radius: 50px;
-    font-size: 1rem;
-    font-weight: 500;
-    color: #d63384; /* Koyu pembe yazı */
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #d63384; /* Pembe yazı */
     white-space: nowrap;
-    border: 2px solid rgba(255, 182, 193, 0.4); /* Açık pembe çerçeve */
-    box-shadow: 0 5px 15px rgba(214, 51, 132, 0.1);
+    border: 2px solid #fff;
+    box-shadow: 0 5px 15px rgba(214, 51, 132, 0.05);
     
-    /* Hafif Süzülme Animasyonu */
-    animation: floatAround 6s ease-in-out infinite;
+    /* Hafif Süzülme */
+    animation: floatAround 5s ease-in-out infinite;
   }
 
   @keyframes floatAround {
@@ -55,22 +54,20 @@
     100% { transform: translateY(0px); }
   }
 
-  /* GİRİŞ KARTI (Daha aydınlık ve zarif) */
+  /* GİRİŞ KARTI (Daha soft ve temiz) */
   .card {
     position: relative;
     z-index: 100;
     width: 90%;
     max-width: 380px;
-    padding: 40px 30px;
+    padding: 45px 35px;
     
-    /* Neredeyse opak beyaz kart */
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 192, 203, 0.6); /* Pembe kenarlık */
-    border-radius: 26px;
-    /* Yumuşak pembe gölge */
-    box-shadow: 0 20px 40px rgba(255, 182, 193, 0.25);
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 2px solid #fff;
+    border-radius: 30px;
+    box-shadow: 0 20px 50px rgba(214, 51, 132, 0.15);
     
     text-align: center;
   }
@@ -78,15 +75,17 @@
   h2 {
     font-family: 'Playfair Display', serif;
     margin-bottom: 5px;
-    font-size: 2.2rem;
-    color: #d63384; /* Başlık pembe */
+    font-size: 2rem;
+    color: #d63384;
     font-weight: 700;
+    letter-spacing: 1px;
   }
 
   p.subtitle {
-    font-size: 0.95rem;
-    color: #666; /* Alt başlık gri */
+    font-size: 0.9rem;
+    color: #777;
     margin-bottom: 30px;
+    font-weight: 500;
   }
 
   .input-group { margin-bottom: 15px; }
@@ -94,31 +93,35 @@
   input {
     width: 100%;
     padding: 15px;
-    border-radius: 15px;
-    border: 2px solid #ffe4e1; /* Çok açık pembe kenar */
-    background: #fff;
+    border-radius: 20px;
+    border: 2px solid #fff;
+    background: rgba(255,255,255,0.6);
     color: #333;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Quicksand', sans-serif;
     font-size: 1rem;
+    font-weight: 500;
     outline: none;
     transition: 0.3s;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
   }
   input::placeholder { color: #aaa; }
   input:focus {
-    border-color: #ffb6c1; /* Odaklanınca pembeleşsin */
-    box-shadow: 0 0 15px rgba(255, 182, 193, 0.2);
+    background: #fff;
+    border-color: #ffb6c1;
+    box-shadow: 0 0 15px rgba(255, 182, 193, 0.3);
   }
+  input:disabled { background: #eee; cursor: not-allowed; }
 
   button {
     width: 100%;
-    padding: 15px;
-    margin-top: 15px;
-    border-radius: 15px;
+    padding: 16px;
+    margin-top: 20px;
+    border-radius: 20px;
     border: none;
-    /* Pembe Gradyan Buton */
-    background: linear-gradient(to right, #ff9a9e, #fad0c4);
-    color: white;
-    font-weight: 600;
+    /* Çok tatlı bir pembe gradyan */
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+    color: #fff;
+    font-weight: 700;
     font-size: 1.1rem;
     cursor: pointer;
     transition: 0.3s;
@@ -127,11 +130,20 @@
   button:hover {
     transform: translateY(-3px);
     box-shadow: 0 15px 25px rgba(255, 154, 158, 0.4);
+    background: linear-gradient(135deg, #ff9a9e 0%, #ffc3a0 100%);
   }
-  button:disabled { background: #ccc; cursor: not-allowed; box-shadow: none; transform: none; }
+  button:disabled { background: #ccc; cursor: not-allowed; transform: none; box-shadow: none; }
 
   .hidden { display:none; }
-  #error { margin-top:15px; color:#d63384; font-weight: bold; }
+  
+  /* Hata Mesajı Stili */
+  #error { 
+    margin-top: 20px; 
+    color: #ff6b6b; 
+    font-weight: 700; 
+    font-size: 0.95rem; 
+    min-height: 25px;
+  }
   
   .shake { animation: shake 0.3s infinite; }
   @keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 50% { transform: translateX(5px); } 75% { transform: translateX(-5px); } }
@@ -144,20 +156,31 @@
 <div class="card" id="login">
   <h2>Hoş Geldin Rua</h2>
   <p class="subtitle">İçeri girmek için küçük bir doğrulama...</p>
-  <div class="input-group"><input id="q1" placeholder="Lakabın ne? (İpucu: Geri..)"></div>
-  <div class="input-group"><input id="q2" placeholder="Kara listede kaç kişi var?"></div>
-  <button id="checkBtn" onclick="check()">Devam Et 🌸</button>
+  
+  <div class="input-group">
+    <input id="q1" placeholder="Lakabın ne? (İpucu: Geri..)">
+  </div>
+  
+  <div class="input-group">
+    <input id="q2" placeholder="Kara listede kaç kişi var?">
+  </div>
+  
+  <button id="checkBtn" onclick="check()">Giriş Yap 🌸</button>
   <div id="error"></div>
 </div>
 
 <div class="card hidden" id="success">
-  <h2 style="color:#d63384;">Harikasın! 🎉</h2>
-  <p class="subtitle" style="margin-top:15px;">Hazırsan başlayalım...<br>Seni içeride bir sürpriz bekliyor.</p>
-  <button id="lockBtn" style="background: linear-gradient(to right, #ffdde1, #ee9ca7); color:#fff;">Sürprizi Aç 🎁</button>
+  <h2 style="color:#ff69b4;">Harikasın! 🎉</h2>
+  <p class="subtitle" style="margin-top:15px; color:#555;">
+    Hazırsan başlayalım...<br>Seni içeride bir sürpriz bekliyor.
+  </p>
+  <button id="lockBtn" style="background: linear-gradient(120deg, #a18cd1 0%, #fbc2eb 100%);">
+    Sürprizi Aç 🎁
+  </button>
 </div>
 
 <script>
-  // SENİN LİSTEN (8 KELİME)
+  // LİSTE (8 KELİME)
   const kelimeler = [
     "Engineer 👷‍♀️", 
     "Geri Tuşu 🔙", 
@@ -171,6 +194,7 @@
 
   const container = document.getElementById('memories');
 
+  // Kelimeleri oluştur
   kelimeler.forEach((kelime) => {
     const tag = document.createElement('div');
     tag.className = 'tag';
@@ -183,29 +207,60 @@
     container.appendChild(tag);
   });
 
-  // --- GİRİŞ KONTROL ---
+  // --- GİRİŞ MANTIĞI (LAF SOKMALI) ---
   let attempts = 3;
+  
   function check(){
+    // HAK BİTTİYSE İŞLEM YAPMA
+    if (attempts <= 0) return;
+
     const q1 = document.getElementById("q1").value.trim();
     const q2 = document.getElementById("q2").value.trim();
     const error = document.getElementById("error");
     const btn = document.getElementById("checkBtn");
+    const inputs = document.querySelectorAll("input");
     
+    // DOĞRU CEVAP
     if(q1.toLowerCase() === "geri tuşu" && q2 === "4"){
       document.getElementById("login").classList.add("hidden");
       document.getElementById("success").classList.remove("hidden");
-      const audio = document.getElementById("bgMusic"); audio.play();
-    } else {
+      const audio = document.getElementById("bgMusic"); 
+      audio.play();
+    } 
+    // YANLIŞ CEVAP
+    else {
       attempts--; 
-      if (attempts <= 0) {
-        error.innerHTML = "Maalesef...<br>Sen Rua değilsin! 🤐";
-        btn.disabled = true; btn.innerText = "KİLİTLENDİ 🚫";
-      } else {
-        error.innerText = `Yanlış cevap! (Kalan hak: ${attempts})`;
-        document.getElementById("login").classList.add("shake");
-        setTimeout(()=>document.getElementById("login").classList.remove("shake"),300);
+      
+      // HAK KALDI MI KONTROLÜ
+      if (attempts === 2) {
+        error.innerHTML = "Nasıl bilmezsin 😱 <br>(Kalan hak: 2)";
+        titret();
+      } 
+      else if (attempts === 1) {
+        error.innerHTML = "Şüphelenmeye başladım 🤨 <br>(Kalan hak: 1)";
+        titret();
+      } 
+      else if (attempts <= 0) {
+        // HAK BİTTİ - KİLİTLEME
+        error.innerHTML = "Git Kadir'e sor...<br>Sen Rua değilsin! 🤐";
+        error.style.color = "#ff4757";
+        
+        btn.disabled = true;
+        btn.innerText = "KİLİTLENDİ 🚫";
+        btn.style.background = "#ccc";
+        
+        inputs.forEach(inp => {
+          inp.disabled = true;
+          inp.placeholder = "🚫";
+        });
       }
     }
+  }
+
+  function titret() {
+    const card = document.getElementById("login");
+    card.classList.add("shake");
+    setTimeout(() => card.classList.remove("shake"), 300);
   }
 
   const lockBtn = document.getElementById("lockBtn");
