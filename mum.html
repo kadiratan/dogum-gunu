@@ -28,9 +28,10 @@
     font-size: 1.5rem;
     animation: fadeIn 2s ease-in;
     padding: 0 20px;
+    transition: opacity 1s;
   }
-  .candle-container { position: relative; cursor: pointer; transition: transform 0.2s; -webkit-tap-highlight-color: transparent; }
-  .candle-container:active { transform: scale(0.98); }
+  .candle-container { position: relative; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  
   .candle {
     width: 50px; height: 150px;
     background: linear-gradient(#e6e6e6, #d9d9d9, #bfbfbf);
@@ -42,32 +43,44 @@
     width: 4px; height: 15px; background: #333; border-radius: 2px;
   }
   
-  /* Alev Normal Hali */
+  /* ALEV AYARLARI */
   .flame {
-    position: absolute; top: -45px; left: 50%; transform: translateX(-50%);
+    position: absolute; top: -45px; left: 50%; 
+    /* Başlangıç pozisyonu */
+    transform: translateX(-50%) scale(1);
     width: 20px; height: 40px;
     background: radial-gradient(ellipse at bottom, #fff 0%, #ffbb00 40%, #ff4d00 100%);
     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
     box-shadow: 0 0 20px #ffbb00, 0 0 50px #ff4d00;
+    
+    /* Titreme animasyonu */
     animation: flicker 1s infinite alternate;
     transform-origin: center bottom; 
-    transition: all 0.3s ease-out; /* Sönme hızını artırdım */
+    
+    /* Sönme geçişi için ayar (2 saniye sürsün) */
+    transition: all 2s ease-out; 
   }
   
   @keyframes flicker {
     0% { transform: translateX(-50%) scale(1); opacity: 1; }
-    100% { transform: translateX(-50%) scale(1) skewX(0deg); opacity: 1; }
+    100% { transform: translateX(-50%) scale(1.1, 0.9); opacity: 0.9; }
   }
 
-  /* --- DÜZELTİLEN KISIM BURASI --- */
-  /* Alev Sönmüş Hali (Garanti Çözüm) */
+  /* SÖNME EFEKTİ (ÖNEMLİ KISIM) */
   .flame.out {
-    opacity: 0 !important; /* Kesinlikle görünmez ol */
-    transform: translateX(-50%) scale(0.1) !important; /* İyice küçült */
-    box-shadow: none !important; /* Parlamayı kapat */
-    background: none !important; /* Kırmızı rengi tamamen kaldır */
+    /* 1. Titremeyi DURDUR (Yoksa küçülme bozulur) */
+    animation: none !important;
+    
+    /* 2. Boyutu SIFIRA indir (yok ol) */
+    transform: translateX(-50%) scale(0) !important;
+    
+    /* 3. Görünürlüğü kapat */
+    opacity: 0 !important;
+    
+    /* 4. Rengi/Parlamayı sil */
+    background: transparent !important;
+    box-shadow: none !important;
   }
-  /* ------------------------------- */
 
   .smoke {
     position: absolute; top: -30px; left: 50%; transform: translateX(-50%);
@@ -75,16 +88,19 @@
     filter: blur(5px); border-radius: 50%; opacity: 0; pointer-events: none;
   }
   .smoke.rise { animation: smokeRise 2s forwards; }
+  
   @keyframes smokeRise {
     0% { opacity: 0.8; height: 10px; top: -20px; }
     100% { opacity: 0; height: 100px; top: -120px; transform: translateX(-50%) scale(3); }
   }
+  
   .wish-message {
     margin-top: 50px; font-size: 1.2rem; opacity: 0;
     color: #ffd700; letter-spacing: 1px; text-align: center; padding: 0 20px;
+    transition: opacity 2s;
   }
-  .fade-in { animation: textAppear 2s forwards; }
-  @keyframes textAppear { to { opacity: 1; } }
+  
+  .fade-in { opacity: 1 !important; }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   .hint { position: absolute; bottom: 30px; font-size: 12px; color: rgba(255,255,255,0.3); }
 </style>
@@ -110,23 +126,26 @@
   function blowCandle() {
     if (isBlown) return;
     isBlown = true;
+    
     const flame = document.getElementById('flame');
     const smoke = document.getElementById('smoke');
     const message = document.getElementById('message');
     const title = document.getElementById('title');
 
-    // Alevi söndür sınıfını ekle
+    // 1. Alevi söndür (CSS animation:none ve scale:0 devreye girer)
     flame.classList.add('out');
     
-    // Dumanı çıkar
-    setTimeout(() => { smoke.classList.add('rise'); }, 100); // Duman daha hızlı çıksın
+    // 2. Duman çıksın
+    smoke.classList.add('rise'); 
     
+    // 3. Yazılar değişsin
     title.style.opacity = '0';
-    setTimeout(() => { message.classList.add('fade-in'); }, 800);
+    message.classList.add('fade-in');
     
+    // 4. YÖNLENDİRME (Tam 2.5 saniye sonra, alev tamamen gittikten sonra)
     setTimeout(() => {
       window.location.href = "final.html";
-    }, 3500);
+    }, 2500);
   }
 </script>
 </body>
