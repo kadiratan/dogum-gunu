@@ -77,29 +77,36 @@ button:disabled {
 </div>
 
 <script>
+// Başlangıç hakkı
 let attempts = 3;
 
 function check(){
+  // --- GÜVENLİK DUVARI 1 ---
+  // Eğer hak zaten bitmişse butona basılsa bile hiçbir şey yapma.
+  if (attempts <= 0) return;
+
   const q1 = document.getElementById("q1").value.trim();
   const q2 = document.getElementById("q2").value.trim();
   const error = document.getElementById("error");
   const btn = document.getElementById("checkBtn");
   const inputs = document.querySelectorAll("input");
 
-  // Eğer zaten kilitliyse işlem yapma
-  if (btn.disabled) return;
-
   // Doğru cevap kontrolü
   if(q1 === "Geri Tuşu" && q2 === "4"){
     document.getElementById("login").classList.add("hidden");
     document.getElementById("success").classList.remove("hidden");
   } else {
-    // Yanlış cevap, hakkı düşür
-    attempts--;
+    // YANLIŞ CEVAP
+    attempts--; // Hakkı bir azalt (3 -> 2, 2 -> 1, 1 -> 0)
 
-    if(attempts <= 0) {
-      // --- HAK BİTTİ (GAME OVER) ---
-      // 0 veya daha az olduğu an burası çalışır
+    // --- GÜVENLİK DUVARI 2 ---
+    // Sayı düştükten HEMEN SONRA kontrol et.
+    
+    if (attempts <= 0) {
+      // Eğer hak 0 olduysa (veya altına indiyse) BURASI ÇALIŞIR.
+      // Ekrana asla "-1" yazdırmaz, direkt kilidi basar.
+      
+      attempts = 0; // Sayıyı 0'a sabitle (görüntü bozulmasın diye)
       
       error.innerHTML = "Git Kadir'e sor artık...<br>Belki de sen Rua değilsin! 🤨";
       error.style.color = "#ff6b6b"; 
@@ -114,7 +121,7 @@ function check(){
       });
 
     } else {
-      // --- HALA HAKKI VAR ---
+      // Eğer hak hala 0'dan büyükse (1 veya 2 ise) BURASI ÇALIŞIR.
       error.innerText = "Yanlış 😅 Kalan hak: " + attempts;
       
       // Titreme efekti
