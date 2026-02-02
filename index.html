@@ -77,12 +77,11 @@ button:disabled {
 </div>
 
 <script>
-// Başlangıç hakkı
+// --- BURASI ÇOK ÖNEMLİ ---
 let attempts = 3;
 
 function check(){
-  // --- GÜVENLİK DUVARI 1 ---
-  // Eğer hak zaten bitmişse butona basılsa bile hiçbir şey yapma.
+  // 1. GÜVENLİK: Eğer hak zaten bittiyse, tuşa basılsa bile hiçbir şey yapma.
   if (attempts <= 0) return;
 
   const q1 = document.getElementById("q1").value.trim();
@@ -91,27 +90,26 @@ function check(){
   const btn = document.getElementById("checkBtn");
   const inputs = document.querySelectorAll("input");
 
-  // Doğru cevap kontrolü
   if(q1 === "Geri Tuşu" && q2 === "4"){
+    // DOĞRU BİLDİ
     document.getElementById("login").classList.add("hidden");
     document.getElementById("success").classList.remove("hidden");
   } else {
-    // YANLIŞ CEVAP
-    attempts--; // Hakkı bir azalt (3 -> 2, 2 -> 1, 1 -> 0)
+    // YANLIŞ BİLDİ
+    attempts--; // Hakkı azalt (Örn: 3 -> 2)
 
-    // --- GÜVENLİK DUVARI 2 ---
-    // Sayı düştükten HEMEN SONRA kontrol et.
-    
-    if (attempts <= 0) {
-      // Eğer hak 0 olduysa (veya altına indiyse) BURASI ÇALIŞIR.
-      // Ekrana asla "-1" yazdırmaz, direkt kilidi basar.
-      
-      attempts = 0; // Sayıyı 0'a sabitle (görüntü bozulmasın diye)
+    // 2. GÜVENLİK: Sayı eksiye düşerse zorla 0 yap.
+    if (attempts < 0) attempts = 0;
+
+    // --- KARAR ANI ---
+    if(attempts === 0) {
+      // HAK BİTTİ (0 OLDU)
+      // Ekrana sayıyı yazdırma, direkt uyarıyı bas!
       
       error.innerHTML = "Git Kadir'e sor artık...<br>Belki de sen Rua değilsin! 🤨";
       error.style.color = "#ff6b6b"; 
       
-      // Her şeyi kilitle
+      // Kilitle
       btn.disabled = true;
       btn.innerText = "KİLİTLENDİ 🚫";
       
@@ -121,10 +119,11 @@ function check(){
       });
 
     } else {
-      // Eğer hak hala 0'dan büyükse (1 veya 2 ise) BURASI ÇALIŞIR.
+      // HALA HAKKI VAR (1 veya 2)
+      // Sadece burada sayıyı yazdırıyoruz.
       error.innerText = "Yanlış 😅 Kalan hak: " + attempts;
       
-      // Titreme efekti
+      // Titret
       const card = document.getElementById("login");
       card.style.animation = "shake 0.3s";
       setTimeout(() => card.style.animation = "", 300);
