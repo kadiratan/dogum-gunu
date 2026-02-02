@@ -9,18 +9,26 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-/* CSS DÜZELTMELERİ */
+/* 1. GARANTİ ÇÖZÜM: Body ayarlarını serbest bıraktım */
 body {
   margin: 0;
-  min-height: 100vh; /* Sabit yükseklik yerine minimum yükseklik */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 40px 20px; /* Üstten alttan boşluk bıraktım */
+  min-height: 100vh;
   background: linear-gradient(135deg,#1a1a2e,#16213e);
   font-family: 'Poppins', sans-serif;
   color: white;
-  padding: 20px; /* Kenarlardan boşluk */
   box-sizing: border-box;
+  
+  /* Sayfa ortalama kodunu değiştirdim, artık kesilme yapamaz */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* İçerik azsa ortada durur */
+}
+
+/* 2. Kart uzarsa sayfa kaydırılabilir olsun */
+html {
+  overflow-y: scroll; /* Scrollu zorla aç */
 }
 
 .card {
@@ -32,10 +40,10 @@ body {
   max-width: 420px;
   text-align: center;
   box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-  position: relative;
-  z-index: 10; /* Konfetilerin üstünde dursun */
-  /* Kartın boyutu içeriğe göre otomatik uzasın */
-  height: auto; 
+  
+  /* İçerik çok uzarsa sayfanın tepesine yapışmasın */
+  margin-top: auto; 
+  margin-bottom: auto;
 }
 
 img {
@@ -47,13 +55,11 @@ img {
   -webkit-tap-highlight-color: transparent;
 }
 
-img:active {
-  transform: scale(0.95);
-}
+img:active { transform: scale(0.95); }
 
 .small { font-size: 14px; opacity: 0.7; margin-bottom: 20px; }
 
-/* Başlangıçta gizli olan kısım */
+/* Başlangıçta gizli */
 .hidden-content {
   display: none;
   margin-top: 20px;
@@ -62,23 +68,25 @@ img:active {
 
 h2 { margin-bottom: 5px; color: #ff7eb3; }
 
-/* Buton Tasarımı */
+/* Butonu görünür yapmak için arka plan rengi verdim */
 .final-btn {
   margin-top: 25px; 
-  padding: 12px 30px; 
-  background: transparent; 
+  padding: 15px 30px; 
+  background: rgba(255,255,255,0.1); /* Hafif beyaz zemin */
   color: white; 
   border: 1px solid rgba(255,255,255,0.6); 
-  border-radius: 0; 
+  border-radius: 12px; 
   cursor: pointer; 
   font-family: 'Poppins', sans-serif; 
-  letter-spacing: 2px; 
+  letter-spacing: 1px; 
   transition: all 0.3s; 
   width: 100%;
+  font-weight: 600;
 }
 
 .final-btn:hover {
-  background-color: rgba(255,255,255,0.1);
+  background-color: white;
+  color: #1a1a2e;
   transform: translateY(-2px);
 }
 
@@ -121,10 +129,10 @@ h2 { margin-bottom: 5px; color: #ff7eb3; }
 function patlat() {
   const secretArea = document.getElementById("secretArea");
   
-  // 1. Gizli alanı aç
+  // Gizli alanı aç
   secretArea.style.display = "block";
 
-  // 2. Konfeti patlat
+  // Konfeti
   var duration = 3 * 1000;
   var animationEnd = Date.now() + duration;
   var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
