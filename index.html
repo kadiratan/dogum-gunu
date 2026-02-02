@@ -80,6 +80,9 @@ button:disabled {
 let attempts = 3;
 
 function check(){
+  // Eğer hak bittiyse işlem yapma (Ekstra Güvenlik)
+  if (attempts <= 0) return;
+
   const q1 = document.getElementById("q1").value.trim();
   const q2 = document.getElementById("q2").value.trim();
   const error = document.getElementById("error");
@@ -91,24 +94,24 @@ function check(){
     document.getElementById("login").classList.add("hidden");
     document.getElementById("success").classList.remove("hidden");
   } else {
-    // Yanlış cevap
+    // Yanlış cevap, hakkı bir azalt
     attempts--;
 
     if(attempts > 0) {
-      // Hala hakkı varsa
+      // Hala hakkı varsa uyar
       error.innerText = "Yanlış 😅 Kalan hak: " + attempts;
       
-      // Minik bir titreme efekti verelim karta
+      // Titreme efekti
       const card = document.getElementById("login");
       card.style.animation = "shake 0.3s";
       setTimeout(() => card.style.animation = "", 300);
       
     } else {
-      // HAKKI BİTTİ (GAME OVER)
+      // HAKKI BİTTİ (0 OLDU) - KİLİTLE
       error.innerHTML = "Git Kadir'e sor artık...<br>Belki de sen Rua değilsin! 🤨";
-      error.style.color = "#ff6b6b"; // Yazı rengini kırmızımsı yap
+      error.style.color = "#ff6b6b"; 
       
-      // Butonu ve girişleri kilitle
+      // Butonu ve girişleri kalıcı olarak kilitle
       btn.disabled = true;
       btn.innerText = "KİLİTLENDİ 🚫";
       
