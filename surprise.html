@@ -18,7 +18,8 @@ body{
   background: linear-gradient(135deg,#1a1a2e,#16213e);
   font-family: 'Poppins', sans-serif;
   color:white;
-  overflow: hidden; 
+  /* ÖNEMLİ: Ekran küçük gelirse aşağı kayabilsin diye bunu değiştirdim */
+  overflow-y: auto; 
 }
 
 .card{
@@ -30,6 +31,8 @@ body{
   max-width: 420px;
   text-align: center;
   box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+  /* Kart çok uzarsa sayfa içinde ortalansın */
+  margin: 20px 0;
 }
 
 img {
@@ -47,7 +50,8 @@ img:active {
 
 .small{ font-size:14px; opacity:0.7; margin-bottom: 20px; }
 
-.hidden-message {
+/* Hem mesaj hem buton başlangıçta gizli */
+.hidden-content {
   display: none;
   margin-top: 20px;
   animation: fadeIn 1s forwards;
@@ -55,9 +59,23 @@ img:active {
 
 h2 { margin-bottom: 5px; color: #ff7eb3; }
 
-/* Butonun üzerine gelince efekti */
+/* Buton Tasarımı */
+.final-btn {
+  margin-top: 25px; 
+  padding: 12px 30px; 
+  background: transparent; 
+  color: white; 
+  border: 1px solid rgba(255,255,255,0.6); 
+  border-radius: 0; 
+  cursor: pointer; 
+  font-family: 'Poppins', sans-serif; 
+  letter-spacing: 2px; 
+  transition: all 0.3s; 
+  width: 100%;
+}
+
 .final-btn:hover {
-  background-color: rgba(255,255,255,0.1) !important;
+  background-color: rgba(255,255,255,0.1);
   transform: translateY(-2px);
 }
 
@@ -82,23 +100,28 @@ h2 { margin-bottom: 5px; color: #ff7eb3; }
   <h2>İyi ki varsın Rua</h2>
   <p>Bazı insanlar sessizce dünyayı güzelleştirir.</p>
 
-  <div class="hidden-message" id="secret">
-    <p style="font-size: 1.2em; font-weight: bold; color: #ff4fa3;">💖 Bu kalp sana ait!</p>
-    <p>Nice mutlu yaşlara...</p>
+  <div class="hidden-content" id="secretArea">
+    
+    <div style="margin-bottom: 20px;">
+      <p style="font-size: 1.2em; font-weight: bold; color: #ff4fa3;">💖 Bu kalp sana ait!</p>
+      <p>Nice mutlu yaşlara...</p>
+    </div>
+
+    <button class="final-btn" onclick="window.location.href='final.html'">
+      ✨ SON BİR NOT
+    </button>
+  
   </div>
-
-  <button class="final-btn" onclick="window.location.href='final.html'" style="margin-top:25px; padding:12px 30px; background: transparent; color:white; border: 1px solid rgba(255,255,255,0.6); border-radius:0; cursor:pointer; font-family: 'Poppins', sans-serif; letter-spacing: 2px; transition: all 0.3s; width: 100%;">
-    ✨ SON BİR NOT
-  </button>
-
 </div>
 
 <script>
 function patlat() {
-  const secret = document.getElementById("secret");
+  const secretArea = document.getElementById("secretArea");
   
-  secret.style.display = "block";
+  // 1. Gizli alanı (mesaj + buton) görünür yap
+  secretArea.style.display = "block";
 
+  // 2. Konfeti yağdır
   var duration = 3 * 1000;
   var animationEnd = Date.now() + duration;
   var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
