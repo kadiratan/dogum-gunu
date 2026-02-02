@@ -8,66 +8,64 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
-*{box-sizing:border-box}
+* { box-sizing: border-box; }
 
-body{
-  margin:0;
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-family:'Inter',sans-serif;
-  background:linear-gradient(135deg,#ff7eb3,#1a1a2e);
-  color:white;
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #ff7eb3, #1a1a2e);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
 }
 
-.card{
-  width:90%;
-  max-width:380px;
-  padding:30px;
-  border-radius:22px;
-  background:rgba(255,255,255,0.12);
-  backdrop-filter:blur(18px);
-  text-align:center;
-  box-shadow:0 25px 60px rgba(0,0,0,0.35);
+.card {
+  width: 90%;
+  max-width: 380px;
+  padding: 30px;
+  border-radius: 22px;
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.35);
+  text-align: center;
 }
 
-input,button{
-  width:100%;
-  padding:14px;
-  margin-top:12px;
-  border-radius:14px;
-  border:none;
+h1,h2 { font-family: 'Playfair Display', serif; }
+
+input,button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 12px;
+  border-radius: 14px;
+  border: none;
 }
 
-input{
-  background:rgba(255,255,255,0.2);
-  color:white;
+input {
+  background: rgba(255,255,255,0.2);
+  color: white;
 }
 
-button{
-  background:linear-gradient(135deg,#ff4fa3,#ff1f7a);
-  color:white;
-  cursor:pointer;
+button {
+  background: linear-gradient(135deg,#ff4fa3,#ff1f7a);
+  color: white;
+  cursor: pointer;
 }
 
-.hidden{display:none}
+.hidden { display:none; }
+#error { margin-top:10px; color:#ffd1dc; }
 
-#error{margin-top:10px;color:#ffd1dc}
+/* Kilit butonu */
+#lockBtn { margin-top:20px; }
 
-#lockBtn{
-  margin-top:20px;
-}
+.shake { animation: shake 0.3s infinite; }
 
-.shake{
-  animation:shake .3s infinite;
-}
-
-@keyframes shake{
-  0%{transform:translateX(0)}
-  25%{transform:translateX(-5px)}
-  50%{transform:translateX(5px)}
-  75%{transform:translateX(-5px)}
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
 }
 </style>
 </head>
@@ -80,12 +78,9 @@ button{
 
 <div class="card" id="login">
   <h2>Bir Adım Daha 💫</h2>
-  <p>Bu sürpriz herkese açık değil</p>
-
   <input id="q1" placeholder="Senin lakabın">
   <input id="q2" placeholder="Kara listede kaç kişi var">
   <button onclick="check()">Devam Et</button>
-
   <div id="error"></div>
 </div>
 
@@ -106,30 +101,30 @@ function check(){
   if(q1==="Geri Tuşu" && q2==="4"){
     login.classList.add("hidden");
     success.classList.remove("hidden");
-  }else{
+  } else {
     attempts--;
     error.innerText = "Yanlış 😅 Kalan hak: " + attempts;
-    if(attempts<=0) location.href="https://google.com";
   }
 }
 
-lockBtn.onclick = ()=>{
-  lockBtn.classList.add("shake");
+const lockBtn = document.getElementById("lockBtn");
+const music = document.getElementById("bgMusic");
 
-  const music = bgMusic;
+lockBtn.onclick = () => {
+  lockBtn.classList.add("shake");
   music.volume = 0.2;
   music.play();
 
   let v = 0.2;
-  const vol = setInterval(()=>{
-    v+=0.05;
-    music.volume = Math.min(v,0.6);
-  },300);
+  const vol = setInterval(() => {
+    v += 0.05;
+    music.volume = Math.min(v, 0.6);
+  }, 300);
 
-  setTimeout(()=>{
+  setTimeout(() => {
     clearInterval(vol);
-    location.href="surprise.html";
-  },3000);
+    window.location.href = "surprise.html";
+  }, 3000);
 };
 </script>
 
