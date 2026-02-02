@@ -11,8 +11,8 @@
   body {
     margin: 0;
     height: 100vh;
-    font-family: 'Quicksand', sans-serif; /* Daha yumuşak, tatlı font */
-    /* Tam kızlara hitap eden "Pastel Sunset" arka plan */
+    font-family: 'Quicksand', sans-serif;
+    /* Kızların sevdiği Pastel Sunset Arka Plan */
     background: linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%);
     display: flex;
     justify-content: center;
@@ -31,7 +31,7 @@
     z-index: 1;
   }
 
-  /* KELİME STİLİ (Daha zarif) */
+  /* KELİME STİLİ */
   .tag {
     position: absolute;
     background: rgba(255, 255, 255, 0.5);
@@ -43,8 +43,6 @@
     white-space: nowrap;
     border: 2px solid #fff;
     box-shadow: 0 5px 15px rgba(214, 51, 132, 0.05);
-    
-    /* Hafif Süzülme */
     animation: floatAround 5s ease-in-out infinite;
   }
 
@@ -54,21 +52,19 @@
     100% { transform: translateY(0px); }
   }
 
-  /* GİRİŞ KARTI (Daha soft ve temiz) */
+  /* KART TASARIMI */
   .card {
     position: relative;
     z-index: 100;
     width: 90%;
     max-width: 380px;
     padding: 45px 35px;
-    
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.85); /* Beyazlığı artırdım */
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
-    border: 2px solid #fff;
+    border: 3px solid #fff;
     border-radius: 30px;
     box-shadow: 0 20px 50px rgba(214, 51, 132, 0.15);
-    
     text-align: center;
   }
 
@@ -78,7 +74,6 @@
     font-size: 2rem;
     color: #d63384;
     font-weight: 700;
-    letter-spacing: 1px;
   }
 
   p.subtitle {
@@ -102,7 +97,6 @@
     font-weight: 500;
     outline: none;
     transition: 0.3s;
-    box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
   }
   input::placeholder { color: #aaa; }
   input:focus {
@@ -110,7 +104,6 @@
     border-color: #ffb6c1;
     box-shadow: 0 0 15px rgba(255, 182, 193, 0.3);
   }
-  input:disabled { background: #eee; cursor: not-allowed; }
 
   button {
     width: 100%;
@@ -118,7 +111,6 @@
     margin-top: 20px;
     border-radius: 20px;
     border: none;
-    /* Çok tatlı bir pembe gradyan */
     background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
     color: #fff;
     font-weight: 700;
@@ -136,10 +128,10 @@
 
   .hidden { display:none; }
   
-  /* Hata Mesajı Stili */
+  /* Hata Mesajı Rengi */
   #error { 
     margin-top: 20px; 
-    color: #ff6b6b; 
+    color: #ff4757; /* Kırmızı ton */
     font-weight: 700; 
     font-size: 0.95rem; 
     min-height: 25px;
@@ -157,13 +149,8 @@
   <h2>Hoş Geldin Rua</h2>
   <p class="subtitle">İçeri girmek için küçük bir doğrulama...</p>
   
-  <div class="input-group">
-    <input id="q1" placeholder="Lakabın ne? (İpucu: Geri..)">
-  </div>
-  
-  <div class="input-group">
-    <input id="q2" placeholder="Kara listede kaç kişi var?">
-  </div>
+  <div class="input-group"><input id="q1" placeholder="Lakabın ne? (İpucu: Geri..)"></div>
+  <div class="input-group"><input id="q2" placeholder="Kara listede kaç kişi var?"></div>
   
   <button id="checkBtn" onclick="check()">Giriş Yap 🌸</button>
   <div id="error"></div>
@@ -171,16 +158,12 @@
 
 <div class="card hidden" id="success">
   <h2 style="color:#ff69b4;">Harikasın! 🎉</h2>
-  <p class="subtitle" style="margin-top:15px; color:#555;">
-    Hazırsan başlayalım...<br>Seni içeride bir sürpriz bekliyor.
-  </p>
-  <button id="lockBtn" style="background: linear-gradient(120deg, #a18cd1 0%, #fbc2eb 100%);">
-    Sürprizi Aç 🎁
-  </button>
+  <p class="subtitle" style="margin-top:15px; color:#555;">Hazırsan başlayalım...<br>Seni içeride bir sürpriz bekliyor.</p>
+  <button id="lockBtn" style="background: linear-gradient(120deg, #a18cd1 0%, #fbc2eb 100%);">Sürprizi Aç 🎁</button>
 </div>
 
 <script>
-  // LİSTE (8 KELİME)
+  // KELİMELER LİSTESİ
   const kelimeler = [
     "Engineer 👷‍♀️", 
     "Geri Tuşu 🔙", 
@@ -194,24 +177,21 @@
 
   const container = document.getElementById('memories');
 
-  // Kelimeleri oluştur
   kelimeler.forEach((kelime) => {
     const tag = document.createElement('div');
     tag.className = 'tag';
     tag.innerText = kelime;
-    // Rastgele konum
     tag.style.top = Math.random() * 80 + 5 + '%';
     tag.style.left = Math.random() * 80 + 5 + '%';
-    // Animasyon gecikmesi
     tag.style.animationDelay = (Math.random() * 5) + 's';
     container.appendChild(tag);
   });
 
-  // --- GİRİŞ MANTIĞI (LAF SOKMALI) ---
+  // --- HAK KONTROL SİSTEMİ ---
   let attempts = 3;
   
   function check(){
-    // HAK BİTTİYSE İŞLEM YAPMA
+    // Eğer hak bittiyse butona basınca işlem yapma
     if (attempts <= 0) return;
 
     const q1 = document.getElementById("q1").value.trim();
@@ -220,18 +200,17 @@
     const btn = document.getElementById("checkBtn");
     const inputs = document.querySelectorAll("input");
     
-    // DOĞRU CEVAP
+    // 1. DOĞRU CEVAP KONTROLÜ
     if(q1.toLowerCase() === "geri tuşu" && q2 === "4"){
       document.getElementById("login").classList.add("hidden");
       document.getElementById("success").classList.remove("hidden");
-      const audio = document.getElementById("bgMusic"); 
-      audio.play();
+      const audio = document.getElementById("bgMusic"); audio.play();
     } 
-    // YANLIŞ CEVAP
+    // 2. YANLIŞ CEVAP KONTROLÜ
     else {
-      attempts--; 
+      attempts--; // Hakkı 1 azalt
       
-      // HAK KALDI MI KONTROLÜ
+      // Kalan hakka göre mesaj ver
       if (attempts === 2) {
         error.innerHTML = "Nasıl bilmezsin 😱 <br>(Kalan hak: 2)";
         titret();
@@ -240,11 +219,11 @@
         error.innerHTML = "Şüphelenmeye başladım 🤨 <br>(Kalan hak: 1)";
         titret();
       } 
-      else if (attempts <= 0) {
-        // HAK BİTTİ - KİLİTLEME
+      else {
+        // HAK BİTTİ (0 OLDU)
         error.innerHTML = "Git Kadir'e sor...<br>Sen Rua değilsin! 🤐";
-        error.style.color = "#ff4757";
         
+        // Butonu ve Inputları Kilitle
         btn.disabled = true;
         btn.innerText = "KİLİTLENDİ 🚫";
         btn.style.background = "#ccc";
@@ -252,6 +231,7 @@
         inputs.forEach(inp => {
           inp.disabled = true;
           inp.placeholder = "🚫";
+          inp.value = "";
         });
       }
     }
