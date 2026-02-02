@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rua 🌸</title>
 
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
 <style>
 body{
   margin:0;
@@ -15,6 +17,7 @@ body{
   background: linear-gradient(135deg,#1a1a2e,#16213e);
   font-family: 'Poppins', sans-serif;
   color:white;
+  overflow: hidden; /* Taşmaları engelle */
 }
 
 .card{
@@ -26,57 +29,91 @@ body{
   max-width: 420px;
   text-align: center;
   box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+  transition: transform 0.3s;
 }
 
-img{
+/* Resim artık tıklanabilir olduğu için imleç değişsin */
+img {
   width:100%;
   border-radius:18px;
   margin-bottom:15px;
+  cursor: pointer; 
+  transition: transform 0.2s;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
 }
 
-.small{ font-size:14px; opacity:0.7; }
-
-.heart{
-  font-size:36px;
-  cursor:pointer;
+img:active {
+  transform: scale(0.95); /* Tıklayınca hafif küçülme efekti */
 }
 
-.pop{ animation: pop 0.3s ease; }
+.small{ font-size:14px; opacity:0.7; margin-bottom: 20px; }
 
-@keyframes pop{
-  0%{transform:scale(1);}
-  50%{transform:scale(1.4);}
-  100%{transform:scale(1);}
+.hidden-message {
+  display: none;
+  margin-top: 20px;
+  animation: fadeIn 1s forwards;
+}
+
+h2 { margin-bottom: 5px; color: #ff7eb3; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 </style>
 </head>
 
 <body>
-<audio autoplay loop><source src="music.mp3" type="audio/mpeg"></audio>
+
+<audio autoplay loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
 <div class="card">
-  <img src="foto.jpg" alt="Rua">
-  <p class="small">(Fotoğrafa basılı tut 🌸)</p>
+  <img src="foto.jpg" alt="Rua" id="ruaFoto" onclick="patlat()">
+  
+  <p class="small">(Sürpriz için fotoğrafa dokun 👆)</p>
 
   <h2>İyi ki varsın Rua</h2>
   <p>Bazı insanlar sessizce dünyayı güzelleştirir.</p>
 
-  <div class="heart" id="heart">💖</div>
-  <p class="small" id="secret" style="display:none;">
-    Bu kalp sana ait.
-  </p>
+  <div class="hidden-message" id="secret">
+    <p style="font-size: 1.2em; font-weight: bold;">💖 Bu kalp sana ait!</p>
+    <p>Nice mutlu, huzurlu yaşlara...</p>
+  </div>
 </div>
 
 <script>
-const heart = document.getElementById("heart");
-const secret = document.getElementById("secret");
-
-heart.onclick = () => {
-  heart.classList.add("pop");
+function patlat() {
+  const secret = document.getElementById("secret");
+  
+  // 1. Gizli mesajı aç
   secret.style.display = "block";
-  setTimeout(()=>heart.classList.remove("pop"),300);
-};
+
+  // 2. Konfeti Yağmuru Başlasın!
+  var duration = 3 * 1000; // 3 saniye sürsün
+  var animationEnd = Date.now() + duration;
+  var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+  var interval = setInterval(function() {
+    var timeLeft = animationEnd - Date.now();
+
+    if (timeLeft <= 0) {
+      return clearInterval(interval);
+    }
+
+    var particleCount = 50 * (timeLeft / duration);
+    
+    // Rastgele konfeti fırlat
+    confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+    confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+  }, 250);
+}
+
+function randomInRange(min, max) {
+  return Math.random() * (max - min) + min;
+}
 </script>
 
 </body>
 </html>
-
