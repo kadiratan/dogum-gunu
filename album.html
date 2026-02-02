@@ -6,159 +6,43 @@
 <title>Kapanış 🎬</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 <style>
-  body {
-    margin: 0;
-    height: 100vh;
-    background: #000;
-    font-family: 'Poppins', sans-serif;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    text-align: center;
-  }
-
-  /* Arka Plan Efekti */
-  .bg-glow {
-    position: absolute;
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, rgba(255, 79, 163, 0.2) 0%, rgba(0,0,0,0) 70%);
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 0;
-    animation: pulse 4s infinite alternate;
-  }
-  @keyframes pulse { from { opacity: 0.5; transform: translate(-50%, -50%) scale(1); } to { opacity: 1; transform: translate(-50%, -50%) scale(1.5); } }
-
-  .container {
-    position: relative;
-    z-index: 2;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(20px);
-    padding: 40px;
-    border-radius: 30px;
-    border: 1px solid rgba(255,255,255,0.1);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    max-width: 350px;
-    width: 90%;
-    animation: slideUp 1s ease-out;
-  }
-
-  /* Sticker Alanı */
-  .profile-img {
-    width: 120px;
-    height: 120px;
-    object-fit: contain; 
-    filter: drop-shadow(0 0 10px rgba(255, 79, 163, 0.8));
-    margin-bottom: 20px;
-    animation: float 3s ease-in-out infinite alternate;
-  }
+  body { margin: 0; height: 100vh; background: #000; font-family: 'Poppins', sans-serif; color: white; display: flex; justify-content: center; align-items: center; overflow: hidden; text-align: center; }
+  .bg-glow { position: absolute; width: 300px; height: 300px; background: radial-gradient(circle, rgba(255, 79, 163, 0.2) 0%, rgba(0,0,0,0) 70%); animation: pulse 4s infinite alternate; }
+  @keyframes pulse { from { opacity: 0.5; transform: scale(1); } to { opacity: 1; transform: scale(1.5); } }
+  .container { position: relative; z-index: 2; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); padding: 40px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 50px rgba(0,0,0,0.5); max-width: 350px; width: 90%; animation: slideUp 1s ease-out; }
+  .profile-img { width: 120px; height: 120px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(255, 79, 163, 0.8)); margin-bottom: 20px; animation: float 3s ease-in-out infinite alternate; }
   @keyframes float { from { transform: translateY(0); } to { transform: translateY(-10px); } }
-
-  h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
-    margin: 0 0 10px 0;
-    color: #ffeb3b;
-  }
-
-  p {
-    font-size: 0.9rem;
-    color: rgba(255,255,255,0.8);
-    line-height: 1.6;
-    margin-bottom: 20px;
-  }
-
-  .credits {
-    font-size: 0.85rem;
-    background: rgba(0,0,0,0.3);
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 25px;
-    text-align: left;
-  }
-
-  .credits div {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 8px;
-    border-bottom: 1px dashed rgba(255,255,255,0.1);
-    padding-bottom: 5px;
-  }
-  
+  h1 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin: 0 0 10px 0; color: #ffeb3b; }
+  p { font-size: 0.9rem; color: rgba(255,255,255,0.8); line-height: 1.6; margin-bottom: 20px; }
+  .credits { font-size: 0.85rem; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; margin-bottom: 25px; text-align: left; }
+  .credits div { display: flex; justify-content: space-between; margin-bottom: 8px; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 5px; }
   .role { color: #ff4fa3; font-weight: bold; }
-
-  .btn {
-    padding: 12px 30px;
-    background: white;
-    color: black;
-    border: none;
-    border-radius: 50px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-    text-decoration: none;
-    display: inline-block;
-  }
+  .btn { padding: 12px 30px; background: white; color: black; border: none; border-radius: 50px; font-weight: bold; cursor: pointer; transition: 0.3s; text-decoration: none; display: inline-block; }
   .btn:hover { background: #ff4fa3; color: white; transform: scale(1.05); }
-
   @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 </style>
 </head>
 <body>
-
 <div class="bg-glow"></div>
-
 <div class="container">
   <img src="sticker.jpg" alt="Kadir Sticker" class="profile-img">
-
   <h1>Mutlu Yıllar!</h1>
-
-  <p>
-    Yeni yaşında her şey gönlünce olsun.<br>
-    Beğenmediysen de çaktırma,<br>idare et. 😄
-  </p>
-
+  <p>Yeni yaşında her şey gönlünce olsun.<br>Beğenmediysen de çaktırma,<br>idare et. 😄</p>
   <div class="credits">
     <div><span class="role">Hazırlayan:</span> <span>Engineer Kadir😎</span></div>
     <div><span class="role">Kodlama:</span> <span>ChatGPT</span></div>
   </div>
-
   <p style="font-size: 10px; opacity: 0.4; margin-top: -10px;">(Kadir Productions gururla sunar)</p>
-
   <a href="index.html" class="btn">Başa Sar ↺</a>
 </div>
 
-<audio id="bgMusic" loop>
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
-
+<audio id="bgMusic" loop> <source src="music.mp3" type="audio/mpeg"> </audio>
 <script>
   const audio = document.getElementById("bgMusic");
-
-  // Hafızadaki süreyi kontrol et
   const savedTime = localStorage.getItem("songTime");
-  if (savedTime) {
-    audio.currentTime = parseFloat(savedTime);
-  }
-
-  // Oynatmaya çalış
-  var playPromise = audio.play();
-  if (playPromise !== undefined) {
-    playPromise.then(_ => {}).catch(error => {
-      document.body.addEventListener('click', () => { audio.play(); }, { once: true });
-    });
-  }
-
-  // Süreyi kaydet
-  setInterval(() => {
-    if (!audio.paused) {
-      localStorage.setItem("songTime", audio.currentTime);
-    }
-  }, 500);
+  if (savedTime) audio.currentTime = parseFloat(savedTime);
+  audio.play().catch(() => { document.body.addEventListener('click', () => { audio.play(); }, { once: true }); });
+  setInterval(() => { if (!audio.paused) localStorage.setItem("songTime", audio.currentTime); }, 500);
 </script>
-
 </body>
 </html>
