@@ -6,6 +6,7 @@
 <title>Rua 🌸</title>
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
 body{
@@ -31,23 +32,21 @@ body{
   box-shadow: 0 30px 60px rgba(0,0,0,0.4);
 }
 
-/* Resim ayarları - Tıklanabilir olduğu belli olsun */
 img {
   width:100%;
   border-radius:18px;
   margin-bottom:15px;
-  cursor: pointer; /* Bilgisayarda el işareti çıkar */
-  transition: transform 0.1s; /* Tıklama efekti için */
-  -webkit-tap-highlight-color: transparent; /* Telefonda tıklayınca mavi kutu çıkmasın */
+  cursor: pointer;
+  transition: transform 0.1s;
+  -webkit-tap-highlight-color: transparent;
 }
 
 img:active {
-  transform: scale(0.95); /* Tıklayınca resim hafifçe içeri göçer */
+  transform: scale(0.95);
 }
 
 .small{ font-size:14px; opacity:0.7; margin-bottom: 20px; }
 
-/* Gizli mesaj başlangıçta görünmez */
 .hidden-message {
   display: none;
   margin-top: 20px;
@@ -55,6 +54,12 @@ img:active {
 }
 
 h2 { margin-bottom: 5px; color: #ff7eb3; }
+
+/* Butonun üzerine gelince efekti */
+.final-btn:hover {
+  background-color: rgba(255,255,255,0.1) !important;
+  transform: translateY(-2px);
+}
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
@@ -81,16 +86,19 @@ h2 { margin-bottom: 5px; color: #ff7eb3; }
     <p style="font-size: 1.2em; font-weight: bold; color: #ff4fa3;">💖 Bu kalp sana ait!</p>
     <p>Nice mutlu yaşlara...</p>
   </div>
+
+  <button class="final-btn" onclick="window.location.href='final.html'" style="margin-top:25px; padding:12px 30px; background: transparent; color:white; border: 1px solid rgba(255,255,255,0.6); border-radius:0; cursor:pointer; font-family: 'Poppins', sans-serif; letter-spacing: 2px; transition: all 0.3s; width: 100%;">
+    ✨ SON BİR NOT
+  </button>
+
 </div>
 
 <script>
 function patlat() {
   const secret = document.getElementById("secret");
   
-  // 1. Gizli mesajı görünür yap
   secret.style.display = "block";
 
-  // 2. Konfeti yağdır
   var duration = 3 * 1000;
   var animationEnd = Date.now() + duration;
   var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
