@@ -10,7 +10,10 @@
     margin: 0; height: 100vh; background-color: #000000;
     overflow: hidden; display: flex; justify-content: center; align-items: center;
     font-family: 'Playfair Display', serif;
+    cursor: crosshair; /* İmleç artı şeklinde olsun */
   }
+  
+  /* Arka plan partikülleri */
   .particle-container { position: absolute; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
   .particle {
     position: absolute; background: rgba(255, 245, 215, 0.7);
@@ -23,6 +26,8 @@
     80% { opacity: 0.5; }
     100% { transform: translateY(-10vh) scale(0.5); opacity: 0; }
   }
+
+  /* Ana Çiçekler */
   .flower-container { position: absolute; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
   .flower {
     position: absolute; width: 100px; height: 100px; opacity: 0;
@@ -52,11 +57,14 @@
     50% { opacity: 0.8; }
     100% { opacity: 1; transform: scale(1) rotate(360deg); }
   }
+
+  /* Mesaj Kutusu */
   .message-container {
     z-index: 10; text-align: center; color: white; opacity: 0;
     animation: contentFadeIn 2s ease-in-out 3s forwards, softGlow 5s ease-in-out infinite alternate 5s;
     padding: 40px; border-radius: 20px; border: 1px solid rgba(255, 245, 215, 0.2);
     background: rgba(0,0,0,0.6); backdrop-filter: blur(10px);
+    pointer-events: auto; /* Yazıya tıklanabilsin */
   }
   @keyframes softGlow {
     0% { box-shadow: 0 0 20px rgba(255, 245, 215, 0.0); }
@@ -77,9 +85,26 @@
     cursor: pointer; transition: all 0.3s;
   }
   .back-btn:hover { background: rgba(255, 245, 215, 0.2); color: white; border-color: white; }
+  
   @keyframes contentFadeIn {
     from { opacity: 0; transform: translateY(20px) scale(0.95); }
     to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* --- TIKLAMA EFEKTLERİ İÇİN CSS --- */
+  .burst {
+    position: absolute;
+    pointer-events: none;
+    animation: fadeOut 1s forwards;
+  }
+  .burst-particle {
+    position: absolute;
+    border-radius: 50%;
+    animation: spread 1s ease-out forwards;
+  }
+  @keyframes spread {
+    0% { transform: translate(0, 0) scale(1); opacity: 1; }
+    100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
   }
 </style>
 </head>
@@ -119,6 +144,57 @@
   <p style="margin-top:20px; font-size: 1em; opacity: 0.7;">İyi ki doğdun, iyi ki varsın.</p>
   
   <button class="back-btn" onclick="location.href='index.html'">BAŞA DÖN</button>
+  
+  <p style="font-size: 10px; margin-top: 15px; opacity: 0.3;">(Ekranda herhangi bir yere dokun...)</p>
 </div>
+
+<script>
+  // Ekrana tıklandığında çalışacak fonksiyon
+  document.addEventListener('click', function(e) {
+    // Tıklanan kordinatlar
+    const x = e.clientX;
+    const y = e.clientY;
+
+    createBurst(x, y);
+  });
+
+  function createBurst(x, y) {
+    const burst = document.createElement('div');
+    burst.className = 'burst';
+    burst.style.left = x + 'px';
+    burst.style.top = y + 'px';
+    document.body.appendChild(burst);
+
+    // Patlama için 20 tane rastgele parçacık oluştur
+    const colors = ['#fff', '#ffd700', '#ff4fa3', '#6c5ce7', '#00d2d3'];
+    
+    for (let i = 0; i < 20; i++) {
+      const p = document.createElement('div');
+      p.className = 'burst-particle';
+      
+      // Rastgele renk
+      p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      p.style.width = Math.random() * 6 + 2 + 'px'; // 2-8px arası
+      p.style.height = p.style.width;
+      
+      // Rastgele yön (açı ve mesafe)
+      const angle = Math.random() * Math.PI * 2;
+      const velocity = Math.random() * 100 + 50; // Ne kadar uzağa gideceği
+      const tx = Math.cos(angle) * velocity + 'px';
+      const ty = Math.sin(angle) * velocity + 'px';
+      
+      p.style.setProperty('--tx', tx);
+      p.style.setProperty('--ty', ty);
+      
+      burst.appendChild(p);
+    }
+
+    // 1 saniye sonra patlama elementini sil (hafıza dolmasın)
+    setTimeout(() => {
+      burst.remove();
+    }, 1000);
+  }
+</script>
+
 </body>
 </html>
