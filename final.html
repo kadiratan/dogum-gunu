@@ -6,17 +6,33 @@
 <title>Rua İçin 💫</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 <style>
-  body { margin: 0; height: 100vh; background-color: #000000; overflow: hidden; display: flex; justify-content: center; align-items: center; font-family: 'Playfair Display', serif; }
+  body { margin: 0; height: 100vh; background-color: #000000; overflow: hidden; display: flex; justify-content: center; align-items: center; font-family: 'Playfair Display', serif; cursor: crosshair; }
   .particle-container { position: absolute; width: 100%; height: 100%; pointer-events: none; }
   .particle { position: absolute; background: rgba(255, 245, 215, 0.7); border-radius: 50%; animation: floatUp linear infinite; opacity: 0; }
   @keyframes floatUp { 0% { transform: translateY(100vh) scale(0); opacity: 0; } 20% { opacity: 0.8; transform: scale(1); } 100% { transform: translateY(-10vh) scale(0.5); opacity: 0; } }
+  
+  /* ÇİÇEK AYARLARI (GÜNCELLENDİ) */
   .flower-container { position: absolute; width: 100%; height: 100%; pointer-events: none; }
   .flower { position: absolute; width: 100px; height: 100px; opacity: 0; transform: scale(0); animation: bloom 3s ease-in-out forwards; }
+  /* Çiçek Merkezleri */
   .flower::after { content: ''; position: absolute; top: 50%; left: 50%; width: 20px; height: 20px; background: #fff5d7; border-radius: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 20px #fff5d7; }
+  
+  /* Temel Yaprak Stili */
   .petal { position: absolute; top: 50%; left: 50%; width: 30px; height: 80px; background: linear-gradient(to top, rgba(255,255,255,0.8), transparent); border-radius: 50% 50% 0 0; transform-origin: bottom center; }
+
+  /* TİP 2 ÇİÇEK (Sivri Pembe) */
+  .flower-type2 .petal { background: linear-gradient(to top, rgba(255, 182, 193, 0.9), transparent); border-radius: 100% 0 100% 0; width: 25px; height: 75px; }
+  .flower-type2::after { background: #ffeb3b; box-shadow: 0 0 20px #ffeb3b; }
+
+  /* TİP 3 ÇİÇEK (Yuvarlak Mavi) */
+  .flower-type3 .petal { background: linear-gradient(to top, rgba(173, 216, 230, 0.9), transparent); border-radius: 50%; width: 35px; height: 70px; }
+  .flower-type3::after { background: #ffffff; width: 25px; height: 25px; }
+
+  /* Yaprak Pozisyonları */
   .p1{transform:translate(-50%,-100%) rotate(0deg)} .p2{transform:translate(-50%,-100%) rotate(45deg)} .p3{transform:translate(-50%,-100%) rotate(90deg)} .p4{transform:translate(-50%,-100%) rotate(135deg)}
   .p5{transform:translate(-50%,-100%) rotate(180deg)} .p6{transform:translate(-50%,-100%) rotate(225deg)} .p7{transform:translate(-50%,-100%) rotate(270deg)} .p8{transform:translate(-50%,-100%) rotate(315deg)}
   @keyframes bloom { 0% {opacity:0; transform:scale(0)} 100% {opacity:1; transform:scale(1) rotate(360deg)} }
+
   .message-container { z-index: 10; text-align: center; color: white; opacity: 0; animation: contentFadeIn 2s ease-in-out 3s forwards; padding: 40px; border-radius: 20px; background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); }
   .message-container h1 { font-size: 3em; margin: 0 0 20px 0; background: linear-gradient(to right, #ffffff, #d4af37); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
   .back-btn { margin-top: 30px; padding: 12px 30px; background: transparent; border: 1px solid rgba(255,255,255,0.5); color: rgba(255,255,255,0.7); cursor: pointer; transition: all 0.3s; }
@@ -28,9 +44,11 @@
 </head>
 <body>
 <div class="particle-container"><div class="particle" style="width:4px; height:4px; left:10%; animation-duration:15s;"></div><div class="particle" style="width:6px; height:6px; left:30%; animation-duration:20s;"></div></div>
+
 <div class="flower-container">
   <div class="flower" style="top: 20%; left: 20%; animation-delay: 0.2s;"><div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div><div class="petal p4"></div><div class="petal p5"></div><div class="petal p6"></div><div class="petal p7"></div><div class="petal p8"></div></div>
-  <div class="flower" style="top: 70%; left: 80%; animation-delay: 0.5s;"><div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div><div class="petal p4"></div><div class="petal p5"></div><div class="petal p6"></div><div class="petal p7"></div><div class="petal p8"></div></div>
+  <div class="flower flower-type2" style="top: 70%; left: 80%; animation-delay: 0.8s; transform: scale(1.2);"><div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div><div class="petal p4"></div><div class="petal p5"></div><div class="petal p6"></div><div class="petal p7"></div><div class="petal p8"></div></div>
+  <div class="flower flower-type3" style="top: 80%; left: 30%; animation-delay: 1.5s; transform: scale(0.9);"><div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div><div class="petal p4"></div><div class="petal p5"></div><div class="petal p6"></div><div class="petal p7"></div><div class="petal p8"></div></div>
 </div>
 
 <div class="message-container">
@@ -39,16 +57,18 @@
   <p style="margin-top:20px; font-size: 1em; opacity: 0.7;">İyi ki doğdun, iyi ki varsın Engineer Rua Hanım</p>
   
   <button class="back-btn" onclick="location.href='album.html'">🎬تمووووم,  تمووووم, انتهى</button>
+  
+  <p style="font-size: 10px; margin-top: 15px; opacity: 0.3;">(Ekranda herhangi bir yere dokun...)</p>
 </div>
 
 <script>
   document.addEventListener('click', function(e) { if(e.target.tagName === 'BUTTON') return; createBurst(e.clientX, e.clientY); });
   function createBurst(x, y) {
     const burst = document.createElement('div'); burst.className = 'burst'; burst.style.left = x + 'px'; burst.style.top = y + 'px'; document.body.appendChild(burst);
-    for (let i = 0; i < 20; i++) {
-      const p = document.createElement('div'); p.className = 'burst-particle'; p.style.backgroundColor = ['#fff', '#ffd700', '#ff4fa3'][Math.floor(Math.random()*3)];
+    for (let i = 0; i < 25; i++) { /* Parçacık sayısını biraz artırdım */
+      const p = document.createElement('div'); p.className = 'burst-particle'; p.style.backgroundColor = ['#fff', '#ffd700', '#ff4fa3', '#6c5ce7', '#00d2d3', '#ff9f43'][Math.floor(Math.random()*6)];
       p.style.width = Math.random() * 12 + 6 + 'px'; p.style.height = p.style.width;
-      const angle = Math.random() * Math.PI * 2; const velocity = Math.random() * 100 + 50;
+      const angle = Math.random() * Math.PI * 2; const velocity = Math.random() * 120 + 50;
       p.style.setProperty('--tx', Math.cos(angle) * velocity + 'px'); p.style.setProperty('--ty', Math.sin(angle) * velocity + 'px');
       burst.appendChild(p);
     }
