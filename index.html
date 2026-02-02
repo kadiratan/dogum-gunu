@@ -77,11 +77,11 @@ button:disabled {
 </div>
 
 <script>
-// --- BURASI ÇOK ÖNEMLİ ---
+// --- GÜNCELLENMİŞ MANTIK ---
 let attempts = 3;
 
 function check(){
-  // 1. GÜVENLİK: Eğer hak zaten bittiyse, tuşa basılsa bile hiçbir şey yapma.
+  // 1. GÜVENLİK
   if (attempts <= 0) return;
 
   const q1 = document.getElementById("q1").value.trim();
@@ -90,26 +90,33 @@ function check(){
   const btn = document.getElementById("checkBtn");
   const inputs = document.querySelectorAll("input");
 
+  // DOĞRU CEVAP
   if(q1 === "Geri Tuşu" && q2 === "4"){
-    // DOĞRU BİLDİ
     document.getElementById("login").classList.add("hidden");
     document.getElementById("success").classList.remove("hidden");
   } else {
-    // YANLIŞ BİLDİ
-    attempts--; // Hakkı azalt (Örn: 3 -> 2)
+    // YANLIŞ CEVAP
+    attempts--; // Hakkı azalt
 
-    // 2. GÜVENLİK: Sayı eksiye düşerse zorla 0 yap.
+    // 2. GÜVENLİK: Eksiye düşerse 0 yap
     if (attempts < 0) attempts = 0;
 
-    // --- KARAR ANI ---
-    if(attempts === 0) {
-      // HAK BİTTİ (0 OLDU)
-      // Ekrana sayıyı yazdırma, direkt uyarıyı bas!
-      
-      error.innerHTML = "Git Kadir'e sor artık...<br>Belki de sen Rua değilsin! 🤨";
+    // --- ÖZEL MESAJ SİSTEMİ ---
+    if(attempts === 2) {
+      // 2 Hak kaldıysa
+      error.innerText = "Nasıl bilmezsin 😱 (Kalan hak: 2)";
+      titret();
+    } 
+    else if(attempts === 1) {
+      // 1 Hak kaldıysa
+      error.innerText = "Şüphelenmeye başladım 🤨 (Kalan hak: 1)";
+      titret();
+    } 
+    else if(attempts === 0) {
+      // HAK BİTTİ (KİLİTLEME)
+      error.innerHTML = "Git Kadir'e sor artık...<br>Belki de sen Rua değilsin! 🤐";
       error.style.color = "#ff6b6b"; 
       
-      // Kilitle
       btn.disabled = true;
       btn.innerText = "KİLİTLENDİ 🚫";
       
@@ -117,18 +124,15 @@ function check(){
         input.disabled = true;
         input.style.opacity = "0.5";
       });
-
-    } else {
-      // HALA HAKKI VAR (1 veya 2)
-      // Sadece burada sayıyı yazdırıyoruz.
-      error.innerText = "Yanlış 😅 Kalan hak: " + attempts;
-      
-      // Titret
-      const card = document.getElementById("login");
-      card.style.animation = "shake 0.3s";
-      setTimeout(() => card.style.animation = "", 300);
     }
   }
+}
+
+// Kartı titreten yardımcı fonksiyon
+function titret() {
+  const card = document.getElementById("login");
+  card.style.animation = "shake 0.3s";
+  setTimeout(() => card.style.animation = "", 300);
 }
 
 const lockBtn = document.getElementById("lockBtn");
