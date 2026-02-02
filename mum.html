@@ -106,9 +106,6 @@
 </style>
 </head>
 <body>
-<audio autoplay loop>
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
 
 <h2 id="title">Yeni yaşın için bir dilek tut...</h2>
 
@@ -171,5 +168,36 @@
     }, 4000);
   }
 </script>
+
+<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  const audio = document.getElementById("bgMusic");
+
+  // Hafızadaki süreyi kontrol et
+  const savedTime = localStorage.getItem("songTime");
+  if (savedTime) {
+    audio.currentTime = parseFloat(savedTime);
+  }
+
+  // Oynatmaya çalış
+  var playPromise = audio.play();
+  if (playPromise !== undefined) {
+    playPromise.then(_ => {}).catch(error => {
+      // Engellenirse ilk tıklamada aç
+      document.body.addEventListener('click', () => { audio.play(); }, { once: true });
+    });
+  }
+
+  // Süreyi kaydet
+  setInterval(() => {
+    if (!audio.paused) {
+      localStorage.setItem("songTime", audio.currentTime);
+    }
+  }, 500);
+</script>
+
 </body>
 </html>
