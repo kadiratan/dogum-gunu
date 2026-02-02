@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bir Dilek Tut 🕯️</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: #050505; /* Kapkaranlık */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Playfair Display', serif;
+    color: white;
+    overflow: hidden;
+  }
+
+  h2 {
+    font-weight: 400;
+    letter-spacing: 2px;
+    opacity: 0.8;
+    text-align: center;
+    margin-bottom: 60px;
+    font-size: 1.5rem;
+    animation: fadeIn 2s ease-in;
+  }
+
+  /* --- MUM TASARIMI (CSS ile Gerçekçi Çizim) --- */
+  .candle-container {
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  
+  .candle-container:active { transform: scale(0.98); }
+
+  /* Mumun Gövdesi */
+  .candle {
+    width: 50px;
+    height: 150px;
+    background: linear-gradient(#e6e6e6, #d9d9d9, #bfbfbf);
+    border-radius: 4px;
+    box-shadow: inset 0 -20px 20px rgba(0,0,0,0.1), 0 0 20px rgba(0,0,0,0.5);
+    position: relative;
+  }
+
+  /* Mumun Fitili */
+  .wick {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 15px;
+    background: #333;
+    border-radius: 2px;
+  }
+
+  /* Alev */
+  .flame {
+    position: absolute;
+    top: -45px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 40px;
+    background: radial-gradient(ellipse at bottom, #fff 0%, #ffbb00 40%, #ff4d00 100%);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    box-shadow: 0 0 20px #ffbb00, 0 0 50px #ff4d00;
+    animation: flicker 1s infinite alternate;
+    transform-origin: center bottom;
+    transition: all 0.5s;
+  }
+
+  /* Alevin Titremesi */
+  @keyframes flicker {
+    0% { transform: translateX(-50%) scale(1); opacity: 1; }
+    20% { transform: translateX(-50%) scale(1.1, 0.9) skewX(2deg); opacity: 0.9; }
+    50% { transform: translateX(-50%) scale(0.9, 1.1) skewX(-2deg); opacity: 1; }
+    80% { transform: translateX(-50%) scale(1.1, 1) skewX(2deg); opacity: 0.9; }
+    100% { transform: translateX(-50%) scale(1) skewX(0deg); opacity: 1; }
+  }
+
+  /* Sönme Efekti */
+  .flame.out {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.5);
+    box-shadow: none;
+  }
+
+  /* Duman Efekti */
+  .smoke {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 40px;
+    background: rgba(255,255,255,0.6);
+    filter: blur(5px);
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .smoke.rise {
+    animation: smokeRise 2s forwards;
+  }
+
+  @keyframes smokeRise {
+    0% { opacity: 0.8; height: 10px; top: -20px; }
+    100% { opacity: 0; height: 100px; top: -120px; transform: translateX(-50%) scale(3); }
+  }
+
+  /* Sonuç Mesajı */
+  .wish-message {
+    margin-top: 50px;
+    font-size: 1.2rem;
+    opacity: 0;
+    color: #ffd700;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+
+  .fade-in { animation: textAppear 2s forwards; }
+
+  @keyframes textAppear { to { opacity: 1; } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .hint {
+    position: absolute;
+    bottom: 30px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+  }
+</style>
+</head>
+<body>
+
+<h2 id="title">Yeni yaşın için bir dilek tut...</h2>
+
+<div class="candle-container" onclick="blowCandle()">
+  <div class="candle">
+    <div class="wick"></div>
+    <div class="flame" id="flame"></div>
+    <div class="smoke" id="smoke"></div>
+  </div>
+</div>
+
+<div class="wish-message" id="message">Dileğin evrene iletildi... ✨</div>
+
+<p class="hint">(Söndürmek için aleve dokun)</p>
+
+<script>
+  let isBlown = false;
+
+  function blowCandle() {
+    if (isBlown) return; // Zaten söndüyse tekrar çalışma
+    isBlown = true;
+
+    const flame = document.getElementById('flame');
+    const smoke = document.getElementById('smoke');
+    const message = document.getElementById('message');
+    const title = document.getElementById('title');
+
+    // 1. Alevi söndür
+    flame.classList.add('out');
+    
+    // 2. Duman çıkar
+    setTimeout(() => {
+      smoke.classList.add('rise');
+    }, 300);
+
+    // 3. Başlığı değiştir
+    title.style.opacity = '0';
+
+    // 4. Mesajı göster
+    setTimeout(() => {
+      message.classList.add('fade-in');
+    }, 800);
+
+    // 5. Diğer sayfaya yönlendir (3 saniye sonra)
+    setTimeout(() => {
+      window.location.href = "final.html";
+    }, 3500);
+  }
+</script>
+
+</body>
+</html>
