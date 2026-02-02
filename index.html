@@ -12,65 +12,64 @@
     margin: 0;
     min-height: 100vh;
     font-family: 'Poppins', sans-serif;
-    /* Canlı ve Modern Arka Plan */
+    /* Canlı Arka Plan */
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     display: flex;
     justify-content: center;
     align-items: center;
     color: white;
-    overflow: hidden;
+    overflow: hidden; /* Kaydırmayı engelle */
     position: relative;
   }
 
-  /* ARKAPLAN SÜZÜLEN KELİMELER */
-  .floating-container {
+  /* ARKAPLAN KELİMELERİ (MEMORIES) */
+  #memories {
     position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
+    top: 0; left: 0; 
+    width: 100%; height: 100%;
     overflow: hidden;
-    z-index: 0; /* En arkada */
-    pointer-events: none;
+    z-index: 1; /* Arka planın üstüne çıkar */
+    pointer-events: none; /* Tıklamayı engellemesin */
   }
 
   .tag {
     position: absolute;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.15); /* Biraz daha belirgin */
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9); /* Yazı rengini parlattım */
     white-space: nowrap;
     animation: floatUp linear infinite;
-    backdrop-filter: blur(2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
   }
 
   @keyframes floatUp {
     0% { transform: translateY(110vh) scale(0.8); opacity: 0; }
-    20% { opacity: 0.8; }
-    80% { opacity: 0.6; }
+    10% { opacity: 1; } /* Hemen görünür olsun */
+    90% { opacity: 0.8; }
     100% { transform: translateY(-10vh) scale(1); opacity: 0; }
   }
 
-  /* GİRİŞ KARTI (CAM EFEKTİ) */
+  /* GİRİŞ KARTI */
   .card {
     position: relative;
-    z-index: 10;
+    z-index: 100; /* En üstte durması için yüksek sayı */
     width: 90%;
     max-width: 360px;
     padding: 40px 30px;
     
-    /* Buzlu Cam Stili */
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: 24px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
     
     text-align: center;
     transition: transform 0.3s ease;
   }
-
-  .card:hover { transform: translateY(-5px); }
 
   h2 {
     font-family: 'Playfair Display', serif;
@@ -82,44 +81,27 @@
 
   p.subtitle {
     font-size: 0.85rem;
-    color: rgba(255,255,255,0.8);
+    color: rgba(255,255,255,0.9);
     margin-bottom: 25px;
-    font-weight: 300;
   }
 
-  /* INPUT TASARIMI */
-  .input-group {
-    margin-bottom: 15px;
-    text-align: left;
-  }
+  /* INPUT */
+  .input-group { margin-bottom: 15px; }
   
-  label {
-    font-size: 0.8rem;
-    margin-left: 10px;
-    color: rgba(255,255,255,0.7);
-  }
-
   input {
     width: 100%;
     padding: 15px;
     margin-top: 5px;
     border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.3);
-    background: rgba(0,0,0,0.2); /* Hafif koyu */
+    border: 1px solid rgba(255,255,255,0.4);
+    background: rgba(0,0,0,0.3);
     color: white;
     font-family: 'Poppins', sans-serif;
     font-size: 1rem;
-    transition: 0.3s;
   }
   
-  input:focus {
-    outline: none;
-    background: rgba(0,0,0,0.4);
-    border-color: #ff9a9e;
-    box-shadow: 0 0 15px rgba(255, 154, 158, 0.3);
-  }
-  
-  input::placeholder { color: rgba(255,255,255,0.4); }
+  input::placeholder { color: rgba(255,255,255,0.6); }
+  input:focus { outline: none; background: rgba(0,0,0,0.5); border-color: #ff9a9e; }
 
   /* BUTON */
   button {
@@ -128,26 +110,18 @@
     margin-top: 15px;
     border-radius: 12px;
     border: none;
-    /* Şık bir gradient */
-    background: linear-gradient(to right, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
-    color: #444;
-    font-weight: 600;
-    font-size: 1rem;
+    background: linear-gradient(to right, #ff9a9e 0%, #fecfef 100%);
+    color: #333;
+    font-weight: 700;
     cursor: pointer;
     transition: 0.3s;
-    box-shadow: 0 5px 15px rgba(255, 154, 158, 0.4);
-  }
-
-  button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(255, 154, 158, 0.6);
-    background: linear-gradient(to right, #ff9a9e 0%, #ffc3a0 100%);
   }
   
-  button:disabled { background: #ccc; cursor: not-allowed; transform: none; box-shadow: none; }
+  button:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(255, 154, 158, 0.4); }
+  button:disabled { background: #999; cursor: not-allowed; }
 
   .hidden { display:none; }
-  #error { margin-top:15px; color:#ffbdc1; font-weight: 500; font-size: 0.9rem; min-height: 20px; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
+  #error { margin-top:15px; color:#ffbdc1; font-weight: bold; font-size: 0.9rem; }
   
   .shake { animation: shake 0.3s infinite; }
   @keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 50% { transform: translateX(5px); } 75% { transform: translateX(-5px); } }
@@ -155,7 +129,7 @@
 </head>
 <body>
 
-<div class="floating-container" id="memories"></div>
+<div id="memories"></div>
 
 <div class="card" id="login">
   <h2>Hoş Geldin Rua</h2>
@@ -175,7 +149,7 @@
 
 <div class="card hidden" id="success">
   <h2 style="color:#a8ff78;">Doğru Cevap! 🎉</h2>
-  <p class="subtitle" style="margin-top:15px; color:white;">
+  <p class="subtitle" style="margin-top:15px;">
     Hazırsan başlayalım...<br>Seni içeride bir sürpriz bekliyor.
   </p>
   <button id="lockBtn" style="background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%); color:#333;">
@@ -184,14 +158,13 @@
 </div>
 
 <script>
-  // --- KELİMELERİ BURAYA YAZ ---
-  // Arkaplanda baloncuk gibi yükselecek kelimeler
+  // KELİMELER (Burayı istediğin gibi düzenle)
   const kelimeler = [
     "Engineer 👷‍♀️", 
     "Geri Tuşu 🔙", 
     "Kara Liste 📜", 
     "Ruaaa", 
-    "Delii🌸",
+    "Delii",
     "😇جميلة الروح",
     "😊أنا سعيد جداً بوجودك",
     "İyi ki doğdun 🎂"
@@ -199,48 +172,51 @@
 
   const container = document.getElementById('memories');
 
+  // Kelimeleri oluşturma fonksiyonu
   function createMemories() {
-    // Ekrana 15 tane rastgele kelime yayalım
-    for(let i=0; i<10; i++) {
-      spawnTag();
+    // Ekrana 15 tane kelime basalım ki boş kalmasın
+    for(let i=0; i<15; i++) {
+      setTimeout(spawnTag, i * 500); // Hepsini sırayla çıkar
     }
   }
 
   function spawnTag() {
+    // Güvenlik kontrolü: Container var mı?
+    if(!container) return;
+
     const tag = document.createElement('div');
     tag.className = 'tag';
+    
+    // Rastgele kelime seç
     tag.innerText = kelimeler[Math.floor(Math.random() * kelimeler.length)];
     
-    // Rastgele konum (Sol %0 ile %90 arası)
-    tag.style.left = Math.random() * 90 + '%';
+    // Rastgele konum (Ekranın genişliğine göre)
+    tag.style.left = Math.random() * 80 + 5 + '%'; // %5 ile %85 arası
     
-    // Rastgele Hız (10sn ile 20sn arası)
-    const duration = Math.random() * 10 + 10;
+    // Rastgele animasyon süresi (15sn - 25sn arası yavaş süzülsün)
+    const duration = Math.random() * 10 + 15;
     tag.style.animationDuration = duration + 's';
     
-    // Hepsi aynı anda başlamasın diye gecikme
-    tag.style.animationDelay = (Math.random() * 15) * -1 + 's';
+    // Rastgele gecikme (Animasyon hemen başlasın ama farklı zamanlarda bitsin)
+    tag.style.animationDelay = (Math.random() * 5) * -1 + 's';
     
     container.appendChild(tag);
   }
 
+  // Fonksiyonu başlat
   createMemories();
 
-  // --- GİRİŞ MANTIĞI ---
+  // --- GİRİŞ KONTROL ---
   let attempts = 3;
-  
   function check(){
     const q1 = document.getElementById("q1").value.trim();
     const q2 = document.getElementById("q2").value.trim();
     const error = document.getElementById("error");
     const btn = document.getElementById("checkBtn");
     
-    // Büyük/küçük harf duyarlılığını kaldırdım
     if(q1.toLowerCase() === "geri tuşu" && q2 === "4"){
       document.getElementById("login").classList.add("hidden");
       document.getElementById("success").classList.remove("hidden");
-      
-      // Müzik Başlat
       const audio = document.getElementById("bgMusic"); 
       audio.play();
     } else {
@@ -259,7 +235,6 @@
   const lockBtn = document.getElementById("lockBtn");
   lockBtn.onclick = () => {
     lockBtn.classList.add("shake");
-    // SURPRISE SAYFASINA GİDER
     setTimeout(() => { window.location.href = "surprise.html"; }, 2000);
   };
 </script>
