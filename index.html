@@ -6,217 +6,77 @@
 <title>Engineer Rua</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    min-height: 100vh;
-    font-family: 'Inter', sans-serif;
-    background: #0f0c29;
-    background: linear-gradient(to bottom, #24243e, #302b63, #0f0c29);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    overflow: hidden;
-    position: relative;
-  }
-
-  /* ARKAPLAN SÜZÜLEN KELİMELER */
-  .floating-container {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    overflow: hidden;
-    z-index: 0;
-    pointer-events: none; /* Tıklamayı engellemesin */
-  }
-
-  .floating-word {
-    position: absolute;
-    bottom: -50px;
-    color: rgba(255, 255, 255, 0.15); /* Çok silik ve şık */
-    font-family: 'Playfair Display', serif;
-    font-size: 1.2rem;
-    white-space: nowrap;
-    animation: floatUp linear infinite;
-    text-shadow: 0 0 5px rgba(255,255,255,0.1);
-  }
-
-  @keyframes floatUp {
-    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-    20% { opacity: 0.6; }
-    80% { opacity: 0.4; }
-    100% { transform: translateY(-110vh) rotate(10deg); opacity: 0; }
-  }
-
-  /* KART TASARIMI */
-  .card {
-    position: relative;
-    z-index: 10;
-    width: 90%;
-    max-width: 380px;
-    padding: 35px 30px;
-    border-radius: 22px;
-    background: rgba(255, 255, 255, 0.05); /* Daha transparan */
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255,255,255,0.1);
-    box-shadow: 0 25px 60px rgba(0,0,0,0.5);
-    text-align: center;
-    animation: fadeIn 1.5s ease-out;
-  }
-
-  @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-
-  h2 { font-family: 'Playfair Display', serif; font-weight: 600; margin-bottom: 25px; color: #ff7eb3; text-shadow: 0 0 10px rgba(255, 126, 179, 0.3); }
-
-  input {
-    width: 100%;
-    padding: 15px;
-    margin-top: 15px;
-    border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.2);
-    background: rgba(0,0,0,0.3);
-    color: white;
-    font-size: 0.95rem;
-    transition: 0.3s;
-  }
-  input:focus { outline: none; border-color: #ff7eb3; background: rgba(0,0,0,0.5); }
-  input::placeholder { color: rgba(255,255,255,0.4); }
-
-  button {
-    width: 100%;
-    padding: 15px;
-    margin-top: 20px;
-    border-radius: 12px;
-    border: none;
-    background: linear-gradient(135deg, #ff7eb3, #ff1f7a);
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.3s;
-    letter-spacing: 1px;
-  }
-  button:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(255, 31, 122, 0.3); }
-  button:disabled { background: #555; cursor: not-allowed; opacity: 0.7; transform: none; }
-
-  .hidden { display:none; }
-  #error { margin-top:15px; color:#ffd1dc; font-size: 0.9rem; min-height: 20px; }
-  
-  .shake { animation: shake 0.3s infinite; }
-  @keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 50% { transform: translateX(5px); } 75% { transform: translateX(-5px); } }
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #ff7eb3, #1a1a2e); display: flex; justify-content: center; align-items: center; color: white; }
+.card { width: 90%; max-width: 380px; padding: 30px; border-radius: 22px; background: rgba(255,255,255,0.12); backdrop-filter: blur(18px); box-shadow: 0 25px 60px rgba(0,0,0,0.35); text-align: center; }
+h1,h2 { font-family: 'Playfair Display', serif; }
+input,button { width: 100%; padding: 14px; margin-top: 12px; border-radius: 14px; border: none; }
+input { background: rgba(255,255,255,0.2); color: white; }
+button { background: linear-gradient(135deg,#ff4fa3,#ff1f7a); color: white; cursor: pointer; transition: 0.3s; }
+button:disabled { background: #555; cursor: not-allowed; opacity: 0.7; }
+.hidden { display:none; }
+#error { margin-top:15px; color:#ffd1dc; font-weight: bold; }
+#lockBtn { margin-top:20px; }
+.shake { animation: shake 0.3s infinite; }
+@keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 50% { transform: translateX(5px); } 75% { transform: translateX(-5px); } }
 </style>
 </head>
 <body>
 
-<div class="floating-container" id="floatingArea"></div>
-
 <div class="card" id="login">
-  <h2>Bir Yaş Dahaa 💫</h2>
-  <p style="font-size: 12px; opacity: 0.6; margin-bottom: 20px;">Aramızdaki parolayı hatırlıyor musun?</p>
-  
-  <input id="q1" placeholder="Senin lakabın ne?">
-  <input id="q2" placeholder="Kara listede kaç kişi var?">
-  
-  <button id="checkBtn" onclick="check()">Giriş Yap</button>
-  <div id="error"></div>
+  <h2>Bir Yaş Dahaa 💫</h2>
+  <input id="q1" placeholder="Senin lakabın ne?">
+  <input id="q2" placeholder="Kara listede kaç kişi var">
+  <button id="checkBtn" onclick="check()">Devam Et</button>
+  <div id="error"></div>
 </div>
 
 <div class="card hidden" id="success">
-  <h1>Hoş Geldin Rua 🌸</h1>
-  <p style="opacity: 0.8; line-height: 1.6;">Şifreler doğru...<br>Ama asıl sürpriz içeride.</p>
-  <button id="lockBtn" style="background: linear-gradient(135deg, #00b09b, #96c93d);">Sürprizi Aç 🔒</button>
+  <h1>Hazır mısın Rua? 🌸</h1>
+  <p>Bir şey daha var…</p>
+  <button id="lockBtn">Küçük sürprizi görmek ister misin? 🔒</button>
 </div>
 
 <script>
-// --- BURAYI DÜZENLE: SOHBETİNİZDEKİ KOMİK KELİMELER ---
-const kelimeler = [
-  "Geri Tuşu", 
-  "Kara Liste", 
-  "Engineer", 
-  "Dedikodu", 
-  "Viranşehir", 
-  "Mühendis Hanım", 
-  "Platonik", 
-  "Şebbap", 
-  "Kahve",
-  "Trip",
-  "Kod Yazmak",
-  "Happy Birthday"
-];
-// -------------------------------------------------------
-
-const container = document.getElementById('floatingArea');
-
-// Kelimeleri rastgele oluştur
-function createFloatingWords() {
-  const wordCount = 15; // Ekranda kaç kelime dönsün
-  for (let i = 0; i < wordCount; i++) {
-    spawnWord();
-  }
-}
-
-function spawnWord() {
-  const el = document.createElement('div');
-  el.className = 'floating-word';
-  el.innerText = kelimeler[Math.floor(Math.random() * kelimeler.length)];
-  
-  // Rastgele pozisyon ve hız
-  el.style.left = Math.random() * 90 + '%'; // Ekran genişliğinde rastgele yer
-  const duration = Math.random() * 10 + 10; // 10 ile 20 saniye arası
-  el.style.animationDuration = duration + 's';
-  el.style.fontSize = (Math.random() * 1 + 0.8) + 'rem'; // Farklı boyutlar
-  
-  // Başlangıç gecikmesi (Hepsi aynı anda çıkmasın)
-  el.style.animationDelay = (Math.random() * 10) + 's';
-  
-  container.appendChild(el);
-}
-
-createFloatingWords();
-
-// --- GİRİŞ MANTIĞI ---
 let attempts = 3;
 function check(){
-  const q1 = document.getElementById("q1").value.trim();
-  const q2 = document.getElementById("q2").value.trim();
-  const error = document.getElementById("error");
-  const btn = document.getElementById("checkBtn");
-  
-  // Küçük harf/Büyük harf duyarlılığını kaldırdım (lowercase yaptım)
-  if(q1.toLowerCase() === "geri tuşu" && q2 === "4"){
-    document.getElementById("login").classList.add("hidden");
-    document.getElementById("success").classList.remove("hidden");
-    
-    // Müzik Başlat
-    const audio = document.getElementById("bgMusic"); 
-    audio.play();
-  } else {
-    attempts--; 
-    if (attempts <= 0) {
-      error.innerHTML = "Git Kadir'e sor...<br>Belki de sen Rua değilsin! 🤐";
-      btn.disabled = true; btn.innerText = "KİLİTLENDİ 🚫";
-      btn.style.background = "#555";
-    } else {
-      error.innerText = `Yanlış cevap! (Kalan hak: ${attempts})`;
-      document.getElementById("login").classList.add("shake");
-      setTimeout(()=>document.getElementById("login").classList.remove("shake"),300);
-    }
-  }
+  const q1 = document.getElementById("q1").value.trim();
+  const q2 = document.getElementById("q2").value.trim();
+  const error = document.getElementById("error");
+  const btn = document.getElementById("checkBtn");
+  
+  if(q1 === "Geri Tuşu" && q2 === "4"){
+    document.getElementById("login").classList.add("hidden");
+    document.getElementById("success").classList.remove("hidden");
+    const audio = document.getElementById("bgMusic"); audio.play();
+  } else {
+    attempts--; 
+    if (attempts <= 0) {
+      error.innerHTML = "Git Kadir'e sor...<br>Belki de sen Rua değilsin! 🤐";
+      btn.disabled = true; btn.innerText = "KİLİTLENDİ 🚫";
+    } else {
+      error.innerText = `Yanlış cevap! (Kalan hak: ${attempts})`;
+      document.getElementById("login").classList.add("shake");
+      setTimeout(()=>document.getElementById("login").classList.remove("shake"),300);
+    }
+  }
 }
 
 const lockBtn = document.getElementById("lockBtn");
 lockBtn.onclick = () => {
-  lockBtn.classList.add("shake");
-  setTimeout(() => { window.location.href = "surprise.html"; }, 2000);
+  lockBtn.classList.add("shake");
+  // BURASI SURPRISE SAYFASINA GİDER
+  setTimeout(() => { window.location.href = "surprise.html"; }, 2000);
 };
 </script>
 
 <audio id="bgMusic" loop> <source src="music.mp3" type="audio/mpeg"> </audio>
 <script>
-  const audio = document.getElementById("bgMusic");
-  const savedTime = localStorage.getItem("songTime");
-  if (savedTime) audio.currentTime = parseFloat(savedTime);
-  audio.play().catch(() => { document.body.addEventListener('click', () => { audio.play(); }, { once: true }); });
-  setInterval(() => { if (!audio.paused) localStorage.setItem("songTime", audio.currentTime); }, 500);
+  const audio = document.getElementById("bgMusic");
+  const savedTime = localStorage.getItem("songTime");
+  if (savedTime) audio.currentTime = parseFloat(savedTime);
+  audio.play().catch(() => { document.body.addEventListener('click', () => { audio.play(); }, { once: true }); });
+  setInterval(() => { if (!audio.paused) localStorage.setItem("songTime", audio.currentTime); }, 500);
 </script>
 </body>
 </html>
