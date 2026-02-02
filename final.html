@@ -158,8 +158,13 @@
       const p = document.createElement('div');
       p.className = 'burst-particle';
       p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-      p.style.width = Math.random() * 6 + 2 + 'px';
+      
+      // --- BURAYI DEĞİŞTİRDİM (BÜYÜTTÜM) ---
+      // Eskiden: Math.random() * 6 + 2 (2px ile 8px arasıydı)
+      // Şimdi: Math.random() * 12 + 6 (6px ile 18px arası)
+      p.style.width = Math.random() * 12 + 6 + 'px'; 
       p.style.height = p.style.width;
+      
       const angle = Math.random() * Math.PI * 2;
       const velocity = Math.random() * 100 + 50;
       const tx = Math.cos(angle) * velocity + 'px';
