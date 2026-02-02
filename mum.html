@@ -64,7 +64,6 @@
     animation: flicker 1s infinite alternate;
     transform-origin: center bottom;
     opacity: 1;
-    /* JS ile müdahale edeceğimiz için buraya transition yazmıyorum */
   }
 
   .c1 .flame { animation-delay: 0s; } .c2 .flame { animation-delay: 0.2s; } .c3 .flame { animation-delay: 0.5s; } .c4 .flame { animation-delay: 0.1s; }
@@ -80,8 +79,6 @@
     width: 4px; height: 30px; background: rgba(255,255,255,0.6);
     filter: blur(4px); opacity: 0;
   }
-  
-  /* Duman çıkışı da 2 saniye sürsün */
   .smoke.rise { animation: smokeRise 2s forwards; }
   
   @keyframes smokeRise {
@@ -89,10 +86,21 @@
     100% { opacity: 0; transform: translateX(-50%) translateY(-50px) scale(3); }
   }
 
+  /* MESAJ KUTULARI */
   .wish-message {
-    margin-top: 50px; font-size: 1.2rem; opacity: 0; color: #ffd700;
-    letter-spacing: 1px; text-align: center; transition: opacity 2s;
+    margin-top: 30px; /* Biraz yukarı aldım */
+    font-size: 1.2rem; opacity: 0; color: #ffd700;
+    letter-spacing: 1px; text-align: center; 
+    transition: opacity 2s;
   }
+  
+  .second-message {
+    margin-top: 10px;
+    font-size: 1rem; opacity: 0; color: #ff7675; /* Biraz daha pembemsi/kırmızı */
+    letter-spacing: 0.5px; text-align: center;
+    transition: opacity 2s;
+  }
+
   .fade-in { opacity: 1 !important; }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   .hint { position: absolute; bottom: 30px; font-size: 12px; color: rgba(255,255,255,0.3); }
@@ -121,9 +129,10 @@
   </div>
 </div>
 
-<div class="wish-message" id="message">Allah dileğini kabul etsin... ✨</div>
-<div class="wish-message" id="message">Bana da dua ettin dimi? ☺️🔪</div>
-  <p class="hint">(Söndürmek için pastaya dokun)</p>
+<div class="wish-message" id="msg1">Allah dileğini kabul etsin... ✨</div>
+<div class="second-message" id="msg2">Bana da dua ettin dimi? ☺️🔪</div>
+
+<p class="hint">(Söndürmek için pastaya dokun)</p>
 
 <script>
   let isBlown = false;
@@ -134,34 +143,37 @@
     
     const flames = document.querySelectorAll('.flame');
     const smokes = document.querySelectorAll('.smoke');
-    const message = document.getElementById('message');
+    
+    // Mesajları ayrı ayrı seçiyoruz
+    const msg1 = document.getElementById('msg1');
+    const msg2 = document.getElementById('msg2');
     const title = document.getElementById('title');
 
     // --- ZORLA SÖNDÜRME OPERASYONU (TAM 2 SANİYE) ---
     flames.forEach(f => {
-      // 1. Titremeyi DURDUR (Yoksa küçülürken titrer, kötü görünür)
       f.style.animation = 'none';
-      
-      // 2. Geçiş süresini ayarla: 2 saniye (2s)
       f.style.transition = 'all 2s ease-out';
-      
-      // 3. Görünmez yap ve küçült
       f.style.opacity = '0';
       f.style.transform = 'translateX(-50%) scale(0)';
     });
 
-    // Dumanları çıkar
     smokes.forEach(s => s.classList.add('rise'));
 
     title.style.opacity = '0';
-    message.classList.add('fade-in');
     
-    // Yönlendirme süresi: 3 saniye (2 saniye sönme payı + 1 saniye okuma payı)
+    // 1. Mesaj hemen gelsin
+    msg1.classList.add('fade-in');
+    
+    // 2. Mesaj (Espri) 0.8 saniye sonra gelsin (Daha komik olur)
+    setTimeout(() => {
+        msg2.classList.add('fade-in');
+    }, 800);
+    
+    // Yönlendirme süresi: 3.5 saniye (Yazıları okuması için yarım saniye daha ekledim)
     setTimeout(() => {
       window.location.href = "final.html";
-    }, 3000);
+    }, 3500);
   }
 </script>
 </body>
 </html>
-
