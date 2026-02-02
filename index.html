@@ -38,7 +38,6 @@ input,button {
 input { background: rgba(255,255,255,0.2); color: white; }
 button { background: linear-gradient(135deg,#ff4fa3,#ff1f7a); color: white; cursor: pointer; transition: 0.3s; }
 
-/* Kilitli buton stili */
 button:disabled {
   background: #555;
   cursor: not-allowed;
@@ -58,9 +57,6 @@ button:disabled {
 </style>
 </head>
 <body>
-<audio id="bgMusic" loop>
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
 
 <div class="card" id="login">
   <h2>Bir Yaş Dahaa 💫</h2>
@@ -77,11 +73,9 @@ button:disabled {
 </div>
 
 <script>
-// --- GÜNCELLENMİŞ MANTIK ---
 let attempts = 3;
 
 function check(){
-  // 1. GÜVENLİK
   if (attempts <= 0) return;
 
   const q1 = document.getElementById("q1").value.trim();
@@ -94,26 +88,24 @@ function check(){
   if(q1 === "Geri Tuşu" && q2 === "4"){
     document.getElementById("login").classList.add("hidden");
     document.getElementById("success").classList.remove("hidden");
+    
+    // Doğru bildiği an müzik garanti başlasın (User interaction olduğu için izin verir)
+    const audio = document.getElementById("bgMusic");
+    audio.play();
   } else {
     // YANLIŞ CEVAP
-    attempts--; // Hakkı azalt
-
-    // 2. GÜVENLİK: Eksiye düşerse 0 yap
+    attempts--; 
     if (attempts < 0) attempts = 0;
 
-    // --- ÖZEL MESAJ SİSTEMİ ---
     if(attempts === 2) {
-      // 2 Hak kaldıysa
       error.innerText = "Nasıl bilmezsin 😱 (Kalan hak: 2)";
       titret();
     } 
     else if(attempts === 1) {
-      // 1 Hak kaldıysa
       error.innerText = "Şüphelenmeye başladım 🤨 (Kalan hak: 1)";
       titret();
     } 
     else if(attempts === 0) {
-      // HAK BİTTİ (KİLİTLEME)
       error.innerHTML = "Git Kadir'e sor artık...<br>Belki de sen Rua değilsin! 🤐";
       error.style.color = "#ff6b6b"; 
       
@@ -128,7 +120,6 @@ function check(){
   }
 }
 
-// Kartı titreten yardımcı fonksiyon
 function titret() {
   const card = document.getElementById("login");
   card.style.animation = "shake 0.3s";
@@ -136,18 +127,47 @@ function titret() {
 }
 
 const lockBtn = document.getElementById("lockBtn");
-const music = document.getElementById("bgMusic");
 
 lockBtn.onclick = () => {
   lockBtn.classList.add("shake");
-  music.volume = 0.2;
-  music.play();
   
+  // Müzik zaten çalıyor olacak, biz sadece yönlendirelim
   setTimeout(() => {
-    window.location.href = "surprise.html";
+    // BURAYI MUM.HTML YAPTIM Kİ ZİNCİR KOPMASIN
+    window.location.href = "mum.html";
   }, 3000);
 };
 </script>
+
+<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  const audio = document.getElementById("bgMusic");
+
+  // Hafızadaki süreyi kontrol et (Sayfa yenilenirse diye)
+  const savedTime = localStorage.getItem("songTime");
+  if (savedTime) {
+    audio.currentTime = parseFloat(savedTime);
+  }
+
+  // Oynatmaya çalış
+  var playPromise = audio.play();
+  if (playPromise !== undefined) {
+    playPromise.then(_ => {}).catch(error => {
+      // Engellenirse ilk tıklamada aç
+      document.body.addEventListener('click', () => { audio.play(); }, { once: true });
+    });
+  }
+
+  // Süreyi kaydet
+  setInterval(() => {
+    if (!audio.paused) {
+      localStorage.setItem("songTime", audio.currentTime);
+    }
+  }, 500);
+</script>
+
 </body>
 </html>
-
