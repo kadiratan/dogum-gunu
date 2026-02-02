@@ -36,9 +36,17 @@ input,button {
   border: none;
 }
 input { background: rgba(255,255,255,0.2); color: white; }
-button { background: linear-gradient(135deg,#ff4fa3,#ff1f7a); color: white; cursor: pointer; }
+button { background: linear-gradient(135deg,#ff4fa3,#ff1f7a); color: white; cursor: pointer; transition: 0.3s; }
+
+/* Kilitli buton stili */
+button:disabled {
+  background: #555;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
 .hidden { display:none; }
-#error { margin-top:10px; color:#ffd1dc; }
+#error { margin-top:15px; color:#ffd1dc; font-weight: bold; }
 #lockBtn { margin-top:20px; }
 .shake { animation: shake 0.3s infinite; }
 @keyframes shake {
@@ -58,7 +66,7 @@ button { background: linear-gradient(135deg,#ff4fa3,#ff1f7a); color: white; curs
   <h2>Bir Adım Daha 💫</h2>
   <input id="q1" placeholder="Senin lakabın">
   <input id="q2" placeholder="Kara listede kaç kişi var">
-  <button onclick="check()">Devam Et</button>
+  <button id="checkBtn" onclick="check()">Devam Et</button>
   <div id="error"></div>
 </div>
 
@@ -70,17 +78,45 @@ button { background: linear-gradient(135deg,#ff4fa3,#ff1f7a); color: white; curs
 
 <script>
 let attempts = 3;
+
 function check(){
   const q1 = document.getElementById("q1").value.trim();
   const q2 = document.getElementById("q2").value.trim();
   const error = document.getElementById("error");
+  const btn = document.getElementById("checkBtn");
+  const inputs = document.querySelectorAll("input");
 
-  if(q1==="Geri Tuşu" && q2==="4"){
-    login.classList.add("hidden");
-    success.classList.remove("hidden");
+  // Doğru cevap kontrolü
+  if(q1 === "Geri Tuşu" && q2 === "4"){
+    document.getElementById("login").classList.add("hidden");
+    document.getElementById("success").classList.remove("hidden");
   } else {
+    // Yanlış cevap
     attempts--;
-    error.innerText = "Yanlış 😅 Kalan hak: " + attempts;
+
+    if(attempts > 0) {
+      // Hala hakkı varsa
+      error.innerText = "Yanlış 😅 Kalan hak: " + attempts;
+      
+      // Minik bir titreme efekti verelim karta
+      const card = document.getElementById("login");
+      card.style.animation = "shake 0.3s";
+      setTimeout(() => card.style.animation = "", 300);
+      
+    } else {
+      // HAKKI BİTTİ (GAME OVER)
+      error.innerHTML = "Git Kadir'e sor artık...<br>Belki de sen Rua değilsin! 🤨";
+      error.style.color = "#ff6b6b"; // Yazı rengini kırmızımsı yap
+      
+      // Butonu ve girişleri kilitle
+      btn.disabled = true;
+      btn.innerText = "KİLİTLENDİ 🚫";
+      
+      inputs.forEach(input => {
+        input.disabled = true;
+        input.style.opacity = "0.5";
+      });
+    }
   }
 }
 
@@ -92,7 +128,6 @@ lockBtn.onclick = () => {
   music.volume = 0.2;
   music.play();
   
-  // Yönlendirme BURADA: surprise.html sayfasına gider
   setTimeout(() => {
     window.location.href = "surprise.html";
   }, 3000);
