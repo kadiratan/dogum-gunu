@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bir Dilek Tut 🕯️</title>
+<title>Bir Dilek Tut 🎂</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 <style>
   body {
     margin: 0;
     height: 100vh;
-    background: #050505;
+    background: #1a1a1a; /* Arka planı biraz yumuşattım */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -19,79 +19,177 @@
     overflow: hidden;
     user-select: none;
   }
+
   h2 {
     font-weight: 400;
-    letter-spacing: 2px;
-    opacity: 0.8;
+    letter-spacing: 1px;
     text-align: center;
-    margin-bottom: 60px;
+    margin-bottom: 50px;
     font-size: 1.5rem;
     animation: fadeIn 2s ease-in;
     padding: 0 20px;
     transition: opacity 1s;
-  }
-  .candle-container { position: relative; cursor: pointer; -webkit-tap-highlight-color: transparent; }
-  
-  .candle {
-    width: 50px; height: 150px;
-    background: linear-gradient(#e6e6e6, #d9d9d9, #bfbfbf);
-    border-radius: 4px; position: relative;
-    box-shadow: inset 0 -20px 20px rgba(0,0,0,0.1), 0 0 20px rgba(0,0,0,0.5);
-    display: flex; justify-content: center;
-  }
-  
-  .wick {
-    position: absolute; top: -15px; width: 4px; height: 15px; background: #333; border-radius: 2px; z-index: 1;
+    text-shadow: 0 0 10px rgba(255,255,255,0.3);
   }
 
-  /* KAPSÜL: Ateşi içinde tutan kutu */
-  .flame-wrapper {
+  /* --- PASTA KAPLAYICISI --- */
+  .cake-container {
+    position: relative;
+    width: 250px;
+    height: 200px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    transition: transform 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  .cake-container:active { transform: scale(0.95); }
+
+  /* --- PASTA GÖVDESİ --- */
+  .plate {
     position: absolute;
-    top: -55px; 
-    width: 20px;
-    height: 40px;
-    transform-origin: bottom center;
-    z-index: 2;
-    /* JS ile müdahale edeceğimiz için buraya transition yazmıyorum */
+    bottom: -10px;
+    width: 280px;
+    height: 10px;
+    background: #eee;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
   }
 
-  /* ATEŞİN KENDİSİ: Sadece titrer */
-  .flame {
+  .layer-bottom {
+    position: absolute;
+    bottom: 0;
+    width: 240px;
+    height: 80px;
+    background: #6c5ce7; /* Mor Kek */
+    border-radius: 15px 15px 0 0;
+  }
+  
+  .layer-top {
+    position: absolute;
+    bottom: 80px;
+    width: 200px;
+    height: 70px;
+    background: #fd79a8; /* Pembe Kek */
+    border-radius: 15px 15px 0 0;
+    z-index: 2;
+  }
+
+  /* Krema Akıntısı (Süs) */
+  .icing {
+    position: absolute;
+    top: 0;
     width: 100%;
-    height: 100%;
+    height: 20px;
+    background: #ffeaa7; /* Krem Rengi */
+    border-radius: 15px 15px 10px 10px;
+  }
+  .drip {
+    position: absolute;
+    top: 15px;
+    width: 20px;
+    height: 25px;
+    background: #ffeaa7;
+    border-radius: 0 0 20px 20px;
+  }
+  .d1 { left: 20px; height: 30px; }
+  .d2 { left: 60px; height: 20px; }
+  .d3 { left: 100px; height: 35px; }
+  .d4 { left: 150px; height: 25px; }
+
+  /* --- MUMLAR (4 Adet) --- */
+  .candles-area {
+    position: absolute;
+    bottom: 150px; /* Pastanın üstü */
+    width: 160px;
+    display: flex;
+    justify-content: space-between;
+    z-index: 5;
+  }
+
+  .candle {
+    position: relative;
+    width: 12px;
+    height: 50px;
+    border-radius: 4px;
+    background: repeating-linear-gradient(45deg, var(--c), var(--c) 5px, #fff 5px, #fff 10px);
+  }
+
+  /* Fitiller */
+  .wick {
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 8px;
+    background: #333;
+  }
+
+  /* --- ALEVLER --- */
+  .flame {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 25px;
     background: radial-gradient(ellipse at bottom, #fff 0%, #ffbb00 40%, #ff4d00 100%);
-    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-    box-shadow: 0 0 20px #ffbb00, 0 0 50px #ff4d00;
+    border-radius: 50% 50% 50% 50%;
+    box-shadow: 0 0 10px #ffbb00;
     animation: flicker 1s infinite alternate;
     transform-origin: center bottom;
+    transition: all 1s ease-out; /* Sönme efekti */
   }
+
+  /* Her alev biraz farklı titresin */
+  .c1 .flame { animation-delay: 0s; }
+  .c2 .flame { animation-delay: 0.2s; }
+  .c3 .flame { animation-delay: 0.5s; }
+  .c4 .flame { animation-delay: 0.1s; }
 
   @keyframes flicker {
-    0% { transform: scale(1); opacity: 1; }
-    100% { transform: scale(1.1, 0.9); opacity: 0.9; }
+    0% { transform: translateX(-50%) scale(1); opacity: 1; }
+    100% { transform: translateX(-50%) scale(1.1, 0.9); opacity: 0.9; }
   }
 
+  /* DUMAN */
   .smoke {
-    position: absolute; top: -30px; 
-    width: 4px; height: 40px; background: rgba(255,255,255,0.6);
-    filter: blur(5px); border-radius: 50%; opacity: 0; pointer-events: none;
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 30px;
+    background: rgba(255,255,255,0.6);
+    filter: blur(4px);
+    opacity: 0;
   }
   .smoke.rise { animation: smokeRise 2s forwards; }
-  
+
   @keyframes smokeRise {
-    0% { opacity: 0.8; height: 10px; top: -20px; }
-    100% { opacity: 0; height: 100px; top: -120px; transform: translateY(-50px) scale(3); }
+    0% { opacity: 0.6; transform: translateX(-50%) translateY(0); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(-50px) scale(3); }
   }
-  
+
+  /* SÖNME SINIFI */
+  .flame.out {
+    transform: translateX(-50%) scale(0) !important;
+    opacity: 0 !important;
+  }
+
   .wish-message {
     margin-top: 50px; font-size: 1.2rem; opacity: 0;
-    color: #ffd700; letter-spacing: 1px; text-align: center; padding: 0 20px;
+    color: #ffd700; letter-spacing: 1px; text-align: center;
     transition: opacity 2s;
   }
   
   .fade-in { opacity: 1 !important; }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   .hint { position: absolute; bottom: 30px; font-size: 12px; color: rgba(255,255,255,0.3); }
+
 </style>
 </head>
 <body>
@@ -100,52 +198,76 @@
 </audio>
 
 <h2 id="title">Yeni yaşın için bir dilek tut...</h2>
-<div class="candle-container" onclick="blowCandle()">
-  <div class="candle">
-    <div class="wick"></div>
-    <div class="flame-wrapper" id="flameWrapper">
-      <div class="flame"></div>
-    </div>
-    <div class="smoke" id="smoke"></div>
+
+<div class="cake-container" onclick="blowCandles()">
+  
+  <div class="plate"></div>
+
+  <div class="layer-bottom"></div>
+
+  <div class="layer-top">
+    <div class="icing"></div>
+    <div class="drip d1"></div><div class="drip d2"></div>
+    <div class="drip d3"></div><div class="drip d4"></div>
   </div>
+
+  <div class="candles-area">
+    <div class="candle c1" style="--c: #0984e3;">
+      <div class="wick"></div>
+      <div class="flame"></div>
+      <div class="smoke"></div>
+    </div>
+    <div class="candle c2" style="--c: #d63031;">
+      <div class="wick"></div>
+      <div class="flame"></div>
+      <div class="smoke"></div>
+    </div>
+    <div class="candle c3" style="--c: #fdcb6e;">
+      <div class="wick"></div>
+      <div class="flame"></div>
+      <div class="smoke"></div>
+    </div>
+    <div class="candle c4" style="--c: #00b894;">
+      <div class="wick"></div>
+      <div class="flame"></div>
+      <div class="smoke"></div>
+    </div>
+  </div>
+
 </div>
+
 <div class="wish-message" id="message">Dileğin evrene iletildi... ✨</div>
-<p class="hint">(Söndürmek için aleve dokun)</p>
+<p class="hint">(Söndürmek için pastaya dokun)</p>
 
 <script>
   let isBlown = false;
-  function blowCandle() {
+  
+  function blowCandles() {
     if (isBlown) return;
     isBlown = true;
     
-    // Elementleri seç
-    const flameWrapper = document.getElementById('flameWrapper');
-    const smoke = document.getElementById('smoke');
+    // Tüm alevleri ve dumanları seç
+    const flames = document.querySelectorAll('.flame');
+    const smokes = document.querySelectorAll('.smoke');
     const message = document.getElementById('message');
     const title = document.getElementById('title');
 
-    // --- BURASI ÇOK ÖNEMLİ: JS İLE ZORLA SÖNDÜRME ---
-    // CSS class eklemek yerine direkt stilini değiştiriyoruz.
-    // Bu komutun çalışmama ihtimali YOKTUR.
+    // Hepsini söndür
+    flames.forEach(f => f.classList.add('out'));
     
-    flameWrapper.style.transition = "all 2s ease-out"; // 2 saniyede değişsin
-    flameWrapper.style.opacity = "0"; // Görünmez ol
-    flameWrapper.style.transform = "scale(0)"; // Boyutunu sıfırla
-    
-    // --------------------------------------------------
+    // Hepsinden duman çıkar
+    smokes.forEach(s => s.classList.add('rise'));
 
-    // Duman hemen çıksın
-    smoke.classList.add('rise'); 
-    
-    // Yazılar değişsin
+    // Yazı değişimi
     title.style.opacity = '0';
     message.classList.add('fade-in');
     
-    // Yönlendirme
+    // 2.5 saniye sonra Final sayfasına git
     setTimeout(() => {
       window.location.href = "final.html";
     }, 2500);
   }
 </script>
+
 </body>
 </html>
