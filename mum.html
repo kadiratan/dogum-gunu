@@ -50,28 +50,26 @@
   .candle { position: relative; width: 12px; height: 50px; border-radius: 4px; background: repeating-linear-gradient(45deg, var(--c), var(--c) 5px, #fff 5px, #fff 10px); }
   .wick { position: absolute; top: -8px; left: 50%; transform: translateX(-50%); width: 2px; height: 8px; background: #333; }
 
-  /* --- ALEVLER (DÜZELTİLEN KISIM) --- */
+  /* --- ALEV AYARLARI --- */
   .flame {
     position: absolute;
     top: -25px;
     left: 50%;
-    transform: translateX(-50%) scale(1); /* Başlangıç boyutu */
+    transform: translateX(-50%) scale(1);
     width: 12px;
     height: 25px;
     background: radial-gradient(ellipse at bottom, #fff 0%, #ffbb00 40%, #ff4d00 100%);
     border-radius: 50% 50% 50% 50%;
     box-shadow: 0 0 10px #ffbb00;
     
-    /* Titreme Animasyonu */
     animation: flicker 1s infinite alternate;
     transform-origin: center bottom;
     
-    /* Sönme Geçişi (1 saniyede yok olacak) */
-    transition: all 1s ease-out; 
+    /* İŞTE BURASI: Süreyi 2 saniye (2s) yaptık */
+    transition: all 2s ease-out; 
     opacity: 1;
   }
 
-  /* Her alev biraz farklı titresin */
   .c1 .flame { animation-delay: 0s; } .c2 .flame { animation-delay: 0.2s; } .c3 .flame { animation-delay: 0.5s; } .c4 .flame { animation-delay: 0.1s; }
 
   @keyframes flicker {
@@ -79,29 +77,23 @@
     100% { transform: translateX(-50%) scale(1.1, 0.9); opacity: 0.9; }
   }
 
-  /* --- SÖNME EFEKTİ (BETON GİBİ SAĞLAM) --- */
+  /* --- SÖNME EFEKTİ --- */
   .flame.out {
-    /* 1. Titremeyi DURDUR (Çok önemli, yoksa küçülmez) */
-    animation: none !important;
-    
-    /* 2. Boyutu SIFIRA indir */
-    transform: translateX(-50%) scale(0) !important;
-    
-    /* 3. Görünmez yap */
-    opacity: 0 !important;
-    
-    /* 4. Rengi ve parlamayı sil */
+    animation: none !important; /* Titremeyi durdur */
+    transform: translateX(-50%) scale(0) !important; /* Küçült */
+    opacity: 0 !important; /* Görünmez yap */
     background: none !important;
     box-shadow: none !important;
   }
-  /* ------------------------------------------ */
 
   .smoke {
     position: absolute; top: -30px; left: 50%; transform: translateX(-50%);
     width: 4px; height: 30px; background: rgba(255,255,255,0.6);
     filter: blur(4px); opacity: 0;
   }
+  /* Duman animasyonu da 2 saniye sürsün */
   .smoke.rise { animation: smokeRise 2s forwards; }
+  
   @keyframes smokeRise {
     0% { opacity: 0.6; transform: translateX(-50%) translateY(0); }
     100% { opacity: 0; transform: translateX(-50%) translateY(-50px) scale(3); }
@@ -153,18 +145,16 @@
     const message = document.getElementById('message');
     const title = document.getElementById('title');
 
-    // Alevleri söndür (CSS'teki .out sınıfı devreye girecek)
     flames.forEach(f => f.classList.add('out'));
-    
-    // Dumanları çıkar
     smokes.forEach(s => s.classList.add('rise'));
 
     title.style.opacity = '0';
     message.classList.add('fade-in');
     
+    // Yönlendirme süresini 3 saniye yaptım (2 saniye sönme + 1 saniye bekleme)
     setTimeout(() => {
       window.location.href = "final.html";
-    }, 2500);
+    }, 3000);
   }
 </script>
 </body>
