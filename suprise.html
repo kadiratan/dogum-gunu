@@ -12,20 +12,20 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  background:linear-gradient(135deg,#1a1a2e,#16213e);
-  font-family:'Poppins',sans-serif;
+  background: linear-gradient(135deg,#1a1a2e,#16213e);
+  font-family: 'Poppins', sans-serif;
   color:white;
 }
 
 .card{
-  background:rgba(255,255,255,0.08);
-  backdrop-filter:blur(20px);
-  border-radius:24px;
-  padding:30px;
-  width:90%;
-  max-width:420px;
-  text-align:center;
-  box-shadow:0 30px 60px rgba(0,0,0,0.4);
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 30px;
+  width: 90%;
+  max-width: 420px;
+  text-align: center;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.4);
 }
 
 img{
@@ -34,24 +34,19 @@ img{
   margin-bottom:15px;
 }
 
-.small{
-  font-size:14px;
-  opacity:0.7;
-}
+.small{ font-size:14px; opacity:0.7; }
 
 .heart{
   font-size:36px;
   cursor:pointer;
 }
 
-.pop{
-  animation:pop .3s ease;
-}
+.pop{ animation: pop 0.3s ease; }
 
 @keyframes pop{
-  0%{transform:scale(1)}
-  50%{transform:scale(1.4)}
-  100%{transform:scale(1)}
+  0%{transform:scale(1);}
+  50%{transform:scale(1.4);}
+  100%{transform:scale(1);}
 }
 </style>
 </head>
@@ -60,23 +55,24 @@ img{
 
 <div class="card">
   <img src="foto.jpg" alt="Rua">
-
-  <p class="small">(Fotoğrafa dokun 🌸)</p>
+  <p class="small">(Fotoğrafa basılı tut 🌸)</p>
 
   <h2>İyi ki varsın Rua</h2>
   <p>Bazı insanlar sessizce dünyayı güzelleştirir.</p>
 
   <div class="heart" id="heart">💖</div>
-
-  <p class="small" id="secret" style="display:none">
+  <p class="small" id="secret" style="display:none;">
     Bu kalp sana ait.
   </p>
 </div>
 
 <script>
-heart.onclick = ()=>{
+const heart = document.getElementById("heart");
+const secret = document.getElementById("secret");
+
+heart.onclick = () => {
   heart.classList.add("pop");
-  secret.style.display="block";
+  secret.style.display = "block";
   setTimeout(()=>heart.classList.remove("pop"),300);
 };
 </script>
